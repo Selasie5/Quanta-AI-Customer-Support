@@ -124,6 +124,7 @@ export default function Home() {
                 />
               </svg>
             </button>
+            
             <h6 className="text-white text-2xl font-light hover:underline">
               <Link href="" onClick={() => setMenuOpen(false)}>
                 Features
@@ -144,6 +145,12 @@ export default function Home() {
                 Support
               </Link>
             </h6>
+            <button className="bg-white p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
+              <Link href="/auth/signup" onClick={() => setMenuOpen(false)}>Get Started</Link>
+            </button>
+            <button className="bg-lime-200 p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
+              <Link href="/auth/login" onClick={() => setMenuOpen(false)}>Login to account</Link>
+            </button>
           </div>
         )}
       </section>

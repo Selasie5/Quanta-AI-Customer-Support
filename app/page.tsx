@@ -1,4 +1,5 @@
 "use client";
+import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import FeaturesCard from "./components/ui/landing-page/FeaturesCard";
@@ -23,6 +24,10 @@ import {
 import SupportForm from "./components/ui/forms/landing/SupportForm";
 
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [buttonPosition, setButtonPosition] = useState(null); // State to hold button's x-position
+  const buttonRef = useRef(null); // Reference for the sandwich button
+
   const TeamMembers = [
     {
       id: 1,
@@ -35,7 +40,7 @@ export default function Home() {
       github: "",
     },
     {
-      id: 1,
+      id: 2,
       name: "Faisal Mawujar",
       image: "/avatar-9.png",
       role: " AI Software Engineer",
@@ -45,7 +50,7 @@ export default function Home() {
       github: "",
     },
     {
-      id: 1,
+      id: 3,
       name: "Ariel Leistner",
       image: "/avatar-8.png",
       role: " AI Software Engineer",
@@ -55,6 +60,13 @@ export default function Home() {
       github: "",
     },
   ];
+
+  useEffect(() => {
+    if (buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      setButtonPosition(rect.left); // Capture the x-position of the button
+    }
+  }, [menuOpen]); // Run this whenever `menuOpen` changes
 
   return (
     <main className=" font-Grosteque h-fit bg-black">
@@ -321,3 +333,7 @@ export default function Home() {
     </main>
   );
 }
+
+      
+
+        

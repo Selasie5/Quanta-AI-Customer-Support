@@ -52,7 +52,7 @@ export default function Header() {
             <Link href="">Meet Our Team</Link>
           </h6>
           <h6 className="text-white font-light hover:underline">
-            <Link href="">The Building Process</Link>
+            <Link href="">Technologies</Link>
           </h6>
           <h6 className="text-white font-light hover:underline">
             <Link href="/supportroom">Support</Link>

@@ -40,8 +40,8 @@ const SupportForm = () => {
     })
   return (
     <form onSubmit={formik.handleSubmit}
-    className='flex flex-col justify-center items-start gap-7'>
-       <div className="flex justify-center items-center gap-[5rem]">
+    className='md:px-0 flex flex-col justify-center items-start gap-7'>
+       <div className="flex flex-col md:flex-row justify-center items-center gap-7 md:gap-[5rem] ">
         <div className="flex flex-col justify-center items-start gap-2">
           <label htmlFor="firstName" className="text-gray-600">
             First Name
@@ -142,7 +142,7 @@ const SupportForm = () => {
         ? "border-red-500"
         : ""
     }`}
-    rows="4" // Adjust the number of rows as needed
+    rows= {4} // Adjust the number of rows as needed
   />
   {formik.touched.message && formik.errors.message && (
     <div className="text-red-500 text-sm">{formik.errors.message}</div>

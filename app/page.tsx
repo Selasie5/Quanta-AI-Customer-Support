@@ -79,7 +79,7 @@ export default function Home() {
       </div>
 
       {/* Hero Section */}
-      <section className="px-12 py-5  data-scroll-section">
+      <section className="px-5 md:px-12 py-5  data-scroll-section">
         <nav className="flex justify-between items-center">
           <div className="logo">
             <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
@@ -112,7 +112,7 @@ export default function Home() {
             Experience the future of customer support with{" "}
             <span className="text-lime-200">Quanta .</span>
           </h1>
-          <p className="text-white font-light text-md w-2/3 text-center">
+          <p className="text-white font-light text-md md:w-2/3 text-center">
             Our AI-driven platform delivers instant, accurate, and personalized
             responses to your customers, ensuring unparalleled satisfaction and
             efficiency.{" "}
@@ -135,10 +135,10 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="px-12 py-5 flex justify-center items-center gap-28 mt-28">
-        <div className="w-2/5 space-y-2">
+      <section className=" px-4 md:px-12 py-5 flex  flex-col md:flex-row justify-center items-center gap-28 mt-28">
+        <div className="md:w-2/5 space-y-2">
           <h4 className="font-light text-lg text-white">Why Choose Quanta?</h4>
-          <h5 className="font-medium text-5xl text-lime-200">
+          <h5 className="font-medium text-4xl  md:text-5xl text-lime-200">
             Efficient support, anytime anywhere
           </h5>
           <p className="font-Manrope text-white text-md font-light">
@@ -149,7 +149,7 @@ export default function Home() {
             enhancing their experience and satisfaction.
           </p>
         </div>
-        <div className="w-3/5 flex justify-center items-start gap-4 flex-wrap">
+        <div className="md:w-3/5 flex-col md:flex justify-center space-y-4 items-start gap-4 flex-wrap">
           <FeaturesCard
             feature="Advanced AI Integration"
             bgColor="bg-red-200"
@@ -195,19 +195,19 @@ export default function Home() {
       {/* Meet Our Team Section */}
       <section
         id="team"
-        className=" px-12 py-5 flex flex-col justify-center items-center gap-5 mt-28"
+        className="px-5 md:px-12 py-5 flex flex-col justify-center items-center gap-5 mt-28"
       >
         <div className="space-y-2 flex flex-col justify-center items-center">
           <p className="text-lg text-white font-light">Team Quanta</p>
           <h2 className="font-medium text-5xl text-lime-200">Meet Our Team</h2>
-          <p className=" text-white text-md font-light w-3/5 text-center">
+          <p className=" text-white text-md font-light md:w-3/5 text-center">
             Over the period of 3 days, this amazing built this amazing
             application ensring best practices, performing code reviews and
             merging some pull requests.Yeah, we turned coffee into meanignful
             code.
           </p>
         </div>
-        <div className="flex flex-row justify-center items-center gap-[6rem] mt-4 ">
+        <div className="flex flex-col md:flex-row justify-center items-center gap-[6rem] mt-4 ">
           {TeamMembers.map((member, id) => (
             <div className="bg-lime-200 w-72 p-5 flex flex-col justify-center items-start gap-2 rounded-md hover:shadow-lg hover:scale-105 transition ease-in-out">
               <Image
@@ -234,18 +234,18 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section className="px-12 py-5 flex justify-center items-center gap-36 mt-28">
-        <div className="w-1/2 space-y-2 flex flex-col justify-center items-start">
+      <section className=" px-5 md:px-12 py-5 flex flex-col md:flex-row justify-center items-center  gap-12 md:gap-36 mt-28">
+        <div className="md:w-1/2 space-y-2 flex flex-col justify-center items-start">
           <p className="text-lg text-white font-light">Technologies</p>
           <h2 className="font-medium text-5xl text-lime-200">
             Behind The Magic
           </h2>
-          <p className=" text-white text-md font-light w-3/5 ">
+          <p className=" text-white text-md font-light md:w-3/5 ">
             We&apos;ve assembled a stellar lineup of tech to bring our vision to
             life. Here’s the secret sauce behind our project&apos;s success
           </p>
         </div>
-        <div className="w-1/2 flex justify-center items-center gap-[2rem] flex-wrap">
+        <div className="md:w-1/2 flex md:justify-center items-center gap-[2rem] flex-wrap">
           <TechStackCard
             language="Next JS"
             domain="frontend"
@@ -305,13 +305,13 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="flex flex-col justify-center items-center gap-3">
-      <div className=" space-y-2 flex flex-col justify-center items-center text-center mt-28">
+      <section className=" flex flex-col justify-center items-center gap-3">
+      <div className="px-5 space-y-2 flex flex-col justify-center items-center text-center mt-28">
           <p className="text-lg text-white font-light">Reach Out To Support</p>
           <h2 className="font-medium text-5xl text-lime-200">
             We&apos;re here to help
           </h2>
-          <p className=" text-white text-md font-light w-3/5 ">
+          <p className=" text-white text-md font-light md:w-3/5 ">
           Fill out the form below, and our support team will get back to you as soon as possible. Whether you have a question, need technical support, or just want to share your feedback, we're here to assist you every step of the way.
           </p>
         </div>

@@ -1,33 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+.font-Manrope {
+  font-family: "Manrope", sans-serif;
+  font-optical-sizing: auto;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+.font-Grosteque{
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-optical-sizing: auto;
+}
+.hero-container
+{
+  background: linear-gradient(rgba(0,0,0,0,0.5), rgba(0,0,0,0.5)), url('/bg.jpg');
+  height: 100vh;
+  position: cover;
+
+}
+.request-button
+{
+ /* background: #fbca1f; */
+  padding: 15px;
+  font-weight: 900;
+  /* font-size: 1rem; */
+  /* border: 3px solid white; */
+  border-radius: 0.4em;
+  box-shadow: 0.1em 0.1em;
+  cursor: pointer;
+}
+
+.request-button:hover {
+    transform: translate(-0.05em, -0.05em);
+    box-shadow: 0.15em 0.15em;
   }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  
+.request-button:active {
+    transform: translate(0.05em, 0.05em);
+    box-shadow: 0.05em 0.05em;
   }
+  /* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
+
+::-webkit-scrollbar-track {
+  background: #22272c;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #22272c;
+  border-radius: 10px;
+  border: 3px solid #22272c;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #b3db73 #22272c;
+}
+
+/* gradient : rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgb(99, 102, 241) 0px 0px 40px 0px */

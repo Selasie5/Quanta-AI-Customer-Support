@@ -1,113 +1,117 @@
+"use client"
 import Image from "next/image";
+import Link from "next/link"
+import FeaturesCard from "./components/ui/landing-page/FeaturesCard";
+
 
 export default function Home() {
+
+  const TeamMember=[
+    {
+      id:1,
+      name: "Selasie Sepenu",
+      role: " AI Software Engineer",
+      linkedin: "",
+      github: ""
+    },
+    {
+      id:1,
+      name: "Faisal Mawujar",
+      role: " AI Software Engineer",
+      linkedin: "",
+      github: ""
+    },
+    {
+      id:1,
+      name: "Ariel Leistner",
+      role: " AI Software Engineer",
+      linkedin: "",
+      github: ""
+    }
+  ]
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+    <main className=" font-Grosteque h-fit bg-black">
+      <div className="bg-lime-200 h-12 flex justify-center items-center">
+        <h6 className="font-Manrope font-medium text-black">This application was built by a team of experienced developed.<span className="underline font-bold">Hire us</span></h6>
       </div>
+      <section className="px-12 py-5  data-scroll-section">
+        <nav className="flex justify-between items-center">
+           <div className="logo">
+            <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
+           </div>
+           <div className="flex justify-center items-center gap-10">
+           <h6 className="text-white font-light hover:underline">
+              <Link href="">
+              Features
+              </Link>
+             </h6>
+           <h6 className="text-white font-light hover:underline">
+              <Link href="">
+              Meet Our Team
+              </Link>
+             </h6>
+           <h6 className="text-white font-light hover:underline">
+              <Link href="">
+              The Building Process
+              </Link>
+             </h6>
+           <h6 className="text-white font-light hover:underline">
+              <Link href="">
+              Support
+              </Link>
+             </h6>
+           </div>
+           <div className="flex justify-center items-center gap-6">
+            
+             <button className="bg-white p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
+              <Link href="/auth/signup">
+              Get Started
+              </Link>
+             </button>
+             <button className="bg-lime-200 p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
+              <Link href="/auth/login">
+              Login to account
+              </Link>
+             </button>
+           </div>
+          </nav>
+      <section className="flex flex-col justify-center items-center mt-[7.5rem]">
+         <h1 className="text-white font-extrabold text-[4rem] leading-tight text-center">Experience the future of customer support with <span className="text-lime-200">Quanta .</span></h1>
+         <p className="text-white font-light text-md w-2/3 text-center">Our AI-driven platform delivers instant, accurate, and personalized responses to your customers, ensuring unparalleled satisfaction and efficiency. </p>
+         <div className="py-3">
+         <button className="font-semibold bg-lime-200 text-sm request-button">Watch A Demo</button>
+         </div>
+         <div className="relative w-full h-[350px] mt-10">
+    <Image
+        src="/hero-3.jpg"
+        layout="fill"
+        objectFit="cover"  // Use "cover" to fill the container while preserving aspect ratio
+        alt="Hero-images"
+        className="rounded-md grayscale-0 shadow-sm"
+    />
+</div>
+      </section>
+      </section>
+      <section className="px-12 py-5 flex justify-center items-center gap-28 mt-28">
+    <div className="w-2/5 space-y-2">
+  <h4 className="font-light text-lg text-white">Why Choose Quanta?</h4>
+  <h5 className="font-medium text-5xl text-lime-200">Efficient support, anytime anywhere</h5>
+  <p className="font-Manrope text-white text-md font-light">Quanta is your intelligent customer support solution, designed to provide seamless assistance to your customers 24/7. With cutting-edge AI technology and advanced deployment on AWS, Quanta ensures your customers receive accurate and prompt responses, enhancing their experience and satisfaction.</p>
+     </div>
+     <div className="w-3/5 flex justify-center items-start gap-4 flex-wrap">
+<FeaturesCard feature="Advanced AI Integration" bgColor="bg-red-200" textColor="text-red-500" shadowColor="shadow-red-300"/>
+<FeaturesCard feature="Robust Infrastructure" bgColor="bg-green-200" textColor="text-green-500" shadowColor="shadow-green-300"/>
+<FeaturesCard feature="Enhanced User Experience" bgColor="bg-blue-200" textColor="text-blue-500" shadowColor="shadow-blue-300"/>
+<FeaturesCard feature="Intelligent Chatbot" bgColor="bg-purple-200" textColor="text-purple-500" shadowColor="shadow-purple-300"/>v
+<FeaturesCard feature="Advanced Analytics" bgColor="bg-orange-200" textColor="text-orange-500" shadowColor="shadow-orange-300"/>v
+<FeaturesCard feature="Intelligent Chatbot" bgColor="bg-purple-200" textColor="text-purple-500" shadowColor="shadow-purple-300"/>v
+     </div>
+      </section>
+      <section id="team" className="flex justify-center items-center">
+        <h2>Meet Our Team</h2>
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      </section>
     </main>
   );
 }

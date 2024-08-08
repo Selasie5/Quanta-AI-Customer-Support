@@ -1,4 +1,4 @@
-// page.tsx
+"use client";
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -111,7 +111,7 @@ export default function Home() {
       </section>
       <section id="team" className="flex justify-center items-center">
         <h2>Meet Our Team</h2>
-
+      </section>
       {/* Hero Section */}
       <section className="px-12 py-5  data-scroll-section">
         <nav className="flex justify-between items-center">

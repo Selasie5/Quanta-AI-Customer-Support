@@ -1,60 +1,47 @@
-"use client";
-import React from "react";
-import { useFormik } from "formik";
-import * as Yup from "yup";
+"use client"
+import React from 'react'
+import {useFormik} from  "formik";
+import * as Yup from "yup"
 
-const signUpSchema = Yup.object().shape({
-  firstName: Yup.string()
-    .min(1, "Your first name must be more than 1 character")
-    .max(20, "Your first name must be less than 20 characters")
+
+//Validator
+const supportFormSchema = Yup.object().shape({
+    firstName: Yup.string()
+    .min(1,"Yoir first name must be more than 1 character ")
+    .max(20, "Your first name must be more than 20 characters")
     .required("First name is required"),
-  lastName: Yup.string()
-    .min(1, "Your last name must be more than 1 character")
-    .max(20, "Your last name must be less than 20 characters")
+    lastName:Yup.string()
+    .min(1, "Your last name is too short")
+    .max(20, "Your last name is too long")
     .required("Last name is required"),
-  email: Yup.string()
-    .email("Invalid email. Please enter a valid email address")
-    .required("Email is required"),
-  business: Yup.string().email(
-    "Invalid email. Please enter a valid email address"
-  ),
-  password: Yup.string()
-    .min(8, "Password must be at least 8 characters long")
-    .matches(/[0-9]/, "Password must contain at least one number")
-    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
-    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
-    .matches(
-      /[!@#$%^&*(),.?":{}|<>]/,
-      "Password must contain at least one special character"
-    )
-    .required("Password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Passwords must match")
-    .required("You must confirm your password"),
-});
+    email: Yup.string().email("Invalid email. Please enter a vaild email address").required("Email is required"),
+    message: Yup.string()
+    .min(3,"Your subject must contain at least 3 characters")
+    .max(60, "Your subject must be less than 60 characters")
+    .required("Message is required"),
+    other: Yup.string()
+    .min(5, "Your message must contain at least 5 characters")
+    .max(200,"Your message must cotain less than 200 characters")
+})
 
-const Signup = () => {
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: "",
-      business: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: signUpSchema,
-    onSubmit: (values) => {
-      console.log("Form Submitted:", values);
-    },
-  });
-
+const SupportForm = () => {
+    const formik = useFormik({
+        initialValues:{
+            firstName:"",
+            lastName:"",
+            email:"",
+            subject:"",
+            message:"", 
+            other:""
+        },
+        onSubmit(values) {
+           console.log("Form submitted:" ,values);
+        },
+    })
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="flex flex-col justify-center items-start gap-7"
-    >
-      <div className="flex justify-center items-center gap-[5rem]">
+    <form onSubmit={formik.handleSubmit}
+    className='md:px-0 flex flex-col justify-center items-start gap-7'>
+       <div className="flex flex-col md:flex-row justify-center items-center gap-7 md:gap-[5rem] ">
         <div className="flex flex-col justify-center items-start gap-2">
           <label htmlFor="firstName" className="text-gray-600">
             First Name
@@ -100,7 +87,6 @@ const Signup = () => {
           )}
         </div>
       </div>
-
       <div className="flex flex-col justify-center items-start gap-2 w-full">
         <label htmlFor="email" className="text-gray-600">
           E-mail
@@ -120,10 +106,51 @@ const Signup = () => {
           <div className="text-red-500 text-sm">{formik.errors.email}</div>
         )}
       </div>
-
       <div className="flex flex-col justify-center items-start gap-2 w-full">
+        <label htmlFor="subject" className="text-gray-600">
+          Subject
+        </label>
+        <input
+          id="subject"
+          name="subject"
+          type="email"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.subject}
+          className={`outline-none border w-full px-3 py-[0.7rem] text-gray-500 border-gray-400 rounded-md ${
+            formik.touched.subject && formik.errors.subject
+              ? "border-red-500"
+              : ""
+          }`}
+        />
+        {formik.touched.subject && formik.errors.subject && (
+          <div className="text-red-500 text-sm">{formik.errors.subject}</div>
+        )}
+      </div>
+      <div className="flex flex-col justify-center items-start gap-2 w-full">
+  <label htmlFor="subject" className="text-gray-600">
+    Message
+  </label>
+  <textarea
+    id="subject"
+    name="subject"
+    onChange={formik.handleChange}
+    onBlur={formik.handleBlur}
+    value={formik.values.message}
+    className={`outline-none border w-full px-3 py-[0.7rem] text-gray-500 border-gray-400 rounded-md ${
+      formik.touched.message && formik.errors.message
+        ? "border-red-500"
+        : ""
+    }`}
+    rows= {4} // Adjust the number of rows as needed
+  />
+  {formik.touched.message && formik.errors.message && (
+    <div className="text-red-500 text-sm">{formik.errors.message}</div>
+  )}
+</div>
+<div className="flex flex-col justify-center items-start gap-2 w-full">
         <label htmlFor="business" className="text-gray-600">
-          Business Email (Optional)
+          Other (Optional)
         </label>
         <input
           id="business"
@@ -131,73 +158,26 @@ const Signup = () => {
           type="email"
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
-          value={formik.values.business}
+          value={formik.values.other}
           className={`outline-none border w-full px-3 py-[0.7rem] text-gray-500 border-gray-400 rounded-md ${
-            formik.touched.business && formik.errors.business
+            formik.touched.other && formik.errors.other
               ? "border-red-500"
               : ""
           }`}
         />
-        {formik.touched.business && formik.errors.business && (
-          <div className="text-red-500 text-sm">{formik.errors.business}</div>
+        {formik.touched.other && formik.errors.other && (
+          <div className="text-red-500 text-sm">{formik.errors.other}</div>
         )}
       </div>
-
-      <div className="flex flex-col justify-center items-start gap-2 w-full">
-        <label htmlFor="password" className="text-gray-600">
-          Password
-        </label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.password}
-          className={`outline-none border w-full px-3 py-[0.7rem] text-gray-500 border-gray-400 rounded-md ${
-            formik.touched.password && formik.errors.password
-              ? "border-red-500"
-              : ""
-          }`}
-        />
-        {formik.touched.password && formik.errors.password && (
-          <div className="text-red-500 text-sm">{formik.errors.password}</div>
-        )}
-      </div>
-
-      <div className="flex flex-col justify-center items-start gap-2 w-full">
-        <label htmlFor="confirmPassword" className="text-gray-600">
-          Confirm Password
-        </label>
-        <input
-          id="confirmPassword"
-          name="confirmPassword"
-          type="password"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.confirmPassword}
-          className={`outline-none border w-full px-3 py-[0.7rem] text-gray-500 border-gray-400 rounded-md ${
-            formik.touched.confirmPassword && formik.errors.confirmPassword
-              ? "border-red-500"
-              : ""
-          }`}
-        />
-        {formik.touched.confirmPassword && formik.errors.confirmPassword && (
-          <div className="text-red-500 text-sm">
-            {formik.errors.confirmPassword}
-          </div>
-        )}
-      </div>
-
       <button
         type="submit"
         className="mt-4 w-full px-6 py-3 bg-lime-300 text-black font-medium rounded-md"
         disabled={!(formik.isValid && formik.dirty)}
       >
-        Sign Up
+        Submit Ticket
       </button>
     </form>
-  );
-};
+  )
+}
 
-export default Signup;
+export default SupportForm

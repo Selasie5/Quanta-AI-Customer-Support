@@ -1,4 +1,11 @@
 "use client";
+import * as React from 'react';
+import Timeline from '@mui/lab/Timeline';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineDot from '@mui/lab/TimelineDot';
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -112,119 +119,9 @@ export default function Home() {
       <section id="team" className="flex justify-center items-center">
         <h2>Meet Our Team</h2>
       </section>
-      {/* Hero Section */}
-      <section className="px-5 md:px-12 py-5  data-scroll-section">
-        <nav className="flex justify-between items-center">
-          <div className="logo">
-            <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
-          </div>
-          <div className="flex justify-center items-center gap-10">
-            <h6 className="text-white font-light hover:underline">
-              <Link href="">Features</Link>
-            </h6>
-            <h6 className="text-white font-light hover:underline">
-              <Link href="">Meet Our Team</Link>
-            </h6>
-            <h6 className="text-white font-light hover:underline">
-              <Link href="">Technologies</Link>
-            </h6>
-            <h6 className="text-white font-light hover:underline">
-              <Link href="">Support</Link>
-            </h6>
-          </div>
-          <div className="flex justify-center items-center gap-6">
-            <button className="bg-white p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-              <Link href="/auth/signup">Get Started</Link>
-            </button>
-            <button className="bg-lime-200 p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-              <Link href="/auth/login">Login to account</Link>
-            </button>
-          </div>
-        </nav>
-        <section className="flex flex-col justify-center items-center mt-[7.5rem]">
-          <h1 className="text-white font-extrabold text-[4rem] leading-tight text-center">
-            Experience the future of customer support with{" "}
-            <span className="text-lime-200">Quanta .</span>
-          </h1>
-          <p className="text-white font-light text-md md:w-2/3 text-center">
-            Our AI-driven platform delivers instant, accurate, and personalized
-            responses to your customers, ensuring unparalleled satisfaction and
-            efficiency.{" "}
-          </p>
-          <div className="py-3">
-            <button className="font-semibold bg-lime-200 text-sm request-button">
-              Watch A Demo
-            </button>
-          </div>
-          <div className="relative w-full h-[350px] mt-10">
-            <Image
-              src="/hero-3.jpg"
-              layout="fill"
-              objectFit="cover" // Use "cover" to fill the container while preserving aspect ratio
-              alt="Hero-images"
-              className="rounded-md grayscale-0 shadow-sm"
-            />
-          </div>
-        </section>
-      </section>
+      
 
-      {/* Features Section */}
-      <section className=" px-4 md:px-12 py-5 flex  flex-col md:flex-row justify-center items-center gap-28 mt-28">
-        <div className="md:w-2/5 space-y-2">
-          <h4 className="font-light text-lg text-white">Why Choose Quanta?</h4>
-          <h5 className="font-medium text-4xl  md:text-5xl text-lime-200">
-            Efficient support, anytime anywhere
-          </h5>
-          <p className="font-Manrope text-white text-md font-light">
-            Quanta is your intelligent customer support solution, designed to
-            provide seamless assistance to your customers 24/7. With
-            cutting-edge AI technology and advanced deployment on AWS, Quanta
-            ensures your customers receive accurate and prompt responses,
-            enhancing their experience and satisfaction.
-          </p>
-        </div>
-        <div className="md:w-3/5 flex-col md:flex justify-center space-y-4 items-start gap-4 flex-wrap">
-          <FeaturesCard
-            feature="Advanced AI Integration"
-            bgColor="bg-red-200"
-            textColor="text-red-500"
-            shadowColor="shadow-red-300"
-          />
-          <FeaturesCard
-            feature="Robust Infrastructure"
-            bgColor="bg-green-200"
-            textColor="text-green-500"
-            shadowColor="shadow-green-300"
-          />
-          <FeaturesCard
-            feature="Enhanced User Experience"
-            bgColor="bg-blue-200"
-            textColor="text-blue-500"
-            shadowColor="shadow-blue-300"
-          />
-          <FeaturesCard
-            feature="Intelligent Chatbot"
-            bgColor="bg-purple-200"
-            textColor="text-purple-500"
-            shadowColor="shadow-purple-300"
-          />
-          v
-          <FeaturesCard
-            feature="Advanced Analytics"
-            bgColor="bg-orange-200"
-            textColor="text-orange-500"
-            shadowColor="shadow-orange-300"
-          />
-          v
-          <FeaturesCard
-            feature="Intelligent Chatbot"
-            bgColor="bg-purple-200"
-            textColor="text-purple-500"
-            shadowColor="shadow-purple-300"
-          />
-          v
-        </div>
-      </section>
+      
 
       {/* Meet Our Team Section */}
       <section
@@ -338,7 +235,56 @@ export default function Home() {
           />
         </div>
       </section>
-
+      <section id="build-process" className="px-12 py-5 flex flex-col justify-center items-center gap-10 mt-28">
+        <div className="space-y-2 flex flex-col justify-center items-center">
+          <p className="text-lg text-white font-light">Our Journey</p>
+          <h2 className="font-medium text-5xl text-lime-200">Build Process Timeline</h2>
+          <p className="text-white text-md font-light md:w-3/5 text-center">
+            Follow our step-by-step journey in creating this amazing website. From initial planning to final deployment, see how we brought our vision to life.
+          </p>
+        </div>
+        <Timeline position="alternate-reverse">
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <div className="bg-lime-200 p-4 rounded-md">
+                <p className="text-black">
+                  <strong>Day 1:</strong> Planning & Design - We started with brainstorming sessions and wireframing the initial design. Tools like Figma were used to create mockups and gather feedback.
+                </p>
+              </div>
+            </TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <div className="bg-lime-200 p-4 rounded-md">
+                <p className="text-black">
+                  <strong>Day 2:</strong> Development - The development phase began with setting up the project structure, integrating Next.js for the frontend, and Tailwind CSS for styling. We also set up the backend using Node.js and MongoDB.
+                </p>
+              </div>
+            </TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <div className="bg-lime-200 p-4 rounded-md">
+                <p className="text-black">
+                  <strong>Day 3:</strong> Testing & Deployment - We conducted thorough testing to ensure everything worked seamlessly. After final reviews and adjustments, the website was deployed on AWS, making it live for users.
+                </p>
+              </div>
+            </TimelineContent>
+          </TimelineItem>
+        </Timeline>
+      </section>
       <section className=" flex flex-col justify-center items-center gap-3">
       <div className="px-5 space-y-2 flex flex-col justify-center items-center text-center mt-28">
           <p className="text-lg text-white font-light">Reach Out To Support</p>

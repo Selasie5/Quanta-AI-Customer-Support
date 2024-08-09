@@ -1,40 +1,51 @@
-import {NextResponse} from "next/server"
-import OpenAI from "openai"
+import { NextRequest, NextResponse } from 'next/server';
+import OpenAI from 'openai';
 
-const systemPrompt ="You are responsible for initiating an asynchronous process using the provided controller. Ensure that the operation is started efficiently, handling any errors gracefully, and providing meaningful feedback throughout the process. If applicable, inform the user about the progress, and log significant events for monitoring purposes. Your goal is to start the process in a controlled and optimized manner."
+const OPENROUTER_API_KEY = process.env.NEXT_PUBLIC_OPEN_ROUTER_KEY;
+const OPENROUTER_BASE_URL = process.env.OPENROUTER_BASE_URL || 'https://openrouter.ai/api/v1';
 
-//POST FUNCTION TO HANDLE INCOMING REQUESTS
-export async function POST(req: { json: () => any; }){
-    const openai = new OpenAI(); //Creating an instance of the  OPENAI client
-    const data = await req.json()
+const openai = new OpenAI({
+  apiKey: OPENROUTER_API_KEY,
+  baseURL: OPENROUTER_BASE_URL,
+//   defaultHeaders: {
+//     'HTTP-Referer': 'https://github.com/OpenRouterTeam/openrouter-examples',
+//   },
+});
 
-    //Chat Completion Request
-    const completion = await openai.chat.completions.create({
-        messages:[{role: 'system', content:systemPrompt}, ...data],
-        model: 'gpt-4o',
+export async function POST(req: NextRequest, res: { write: (arg0: Uint8Array, arg1: () => void) => void; }) {
+  try {
+    const { messages } = await req.json();
+
+    const userMessage = messages[messages.length - 1].text;
+
+    // Create a completion with streaming
+    const stream = await openai.chat.completions.create({
+        model: 'openai/gpt-4',
+        messages: [{ role: 'user', content: userMessage }],
         stream: true,
-    })
+    });
 
-    //Handling streaming response via a Readable stream
-    const stream = new ReadableStream({
-        async start(controller)
-        {
-            const encoder = new TextEncoder()
-            try {
-                for await (const chunk of completion){
-                    const content = chunk.choices[0]?.delta?.content
-                    if(content){
-                        const text = encoder.encode(content)
-                        controller.enqueue(text)
-                    }
-                }
-            } catch (err) {
-                controller.error(err)
-            }finally{
-                controller.close()
-            }
-        }
-    })
+    const responseHeaders = new Headers();
+    responseHeaders.set('Content-Type', 'text/event-stream');
+    responseHeaders.set('Cache-Control', 'no-cache');
+    responseHeaders.set('Connection', 'keep-alive');
 
-    return new NextResponse(stream)
+    let combinedText = '';
+
+    for await (const part of stream) {
+      combinedText += part.choices[0]?.delta?.content || '';
+      const chunk = part.choices[0]?.delta?.content || '';
+      const encodedChunk = new TextEncoder().encode(chunk);
+      await new Promise((resolve) => {
+        res.write(encodedChunk, () => {
+          resolve(true);
+        });
+      });
+    }
+
+    return new NextResponse(combinedText, { headers: responseHeaders });
+
+  } catch (error) {
+    return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
+  }
 }

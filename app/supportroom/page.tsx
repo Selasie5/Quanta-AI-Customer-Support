@@ -1,11 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { FaCommentAlt } from "react-icons/fa";
 
-const ChatroomPage = () => {
-  const [messages, setMessages] = useState([
+interface Message {
+  id: number;
+  sender: "user" | "bot";
+  text: string;
+}
+
+const ChatroomPage: React.FC = () => {
+  const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
       sender: "bot",
@@ -22,50 +27,58 @@ const ChatroomPage = () => {
       text: "Absolutely! Quanta is an AI-driven platform that delivers instant, accurate, and personalized responses to your customers, ensuring unparalleled satisfaction and efficiency.",
     },
   ]);
-  const [newMessage, setNewMessage] = useState("");
 
-  // State variables for controlling the size of chat messages
-  const [messageWidth, setMessageWidth] = useState("40%");
-  const [messageHeight, setMessageHeight] = useState("auto");
+  const [newMessage, setNewMessage] = useState<string>("");
 
-  const countWords = (text: string) => {
-    return text.trim().split(/\s+/).length;
-  };
+  const sendMessage = async () => {
+    if (!newMessage.trim()) return;
 
-  const countCharacters = (text: string) => {
-    return text.length;
-  };
+    const updatedMessages: Message[] = [
+      ...messages,
+      { id: messages.length + 1, sender: "user", text: newMessage },
+    ];
 
-  const getTotalWordCount = () => {
-    return messages.reduce((total, message) => total + countWords(message.text), 0);
-  };
+    setMessages(updatedMessages);
+    setNewMessage(""); // Clear the input field
 
-  const getTotalCharacterCount = () => {
-    return messages.reduce((total, message) => total + countCharacters(message.text), 0);
-  };
-
-  const handleSendMessage = () => {
-    const totalWordCount = getTotalWordCount();
-    const totalCharacterCount = getTotalCharacterCount();
-    const newMessageWordCount = countWords(newMessage);
-    const newMessageCharacterCount = countCharacters(newMessage);
-
-    if (
-      newMessage.trim() !== "" &&
-      totalWordCount + newMessageWordCount <= 500 &&
-      totalCharacterCount + newMessageCharacterCount <= 2600
-    ) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          id: prevMessages.length + 1,
-          sender: "user",
-          text: newMessage,
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
         },
-      ]);
-      setNewMessage("");
-    } else {
-      alert("Word or character limit exceeded. You can only send up to 500 words and 2600 characters in total.");
+        body: JSON.stringify({ messages: updatedMessages }),
+      });
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let botReply = "";
+
+      if (reader) {
+        const processStream = async () => {
+          const { done, value } = await reader.read();
+          if (done) {
+            return;
+          }
+          
+          const chunk = decoder.decode(value, { stream: true });
+          botReply += chunk;
+
+          setMessages((prevMessages) => {
+            const lastMessage = prevMessages[prevMessages.length - 1];
+            return [
+              ...prevMessages.slice(0, prevMessages.length - 1),
+              { ...lastMessage, text: botReply },
+            ];
+          });
+
+          processStream(); // Continue processing the stream
+        };
+
+        processStream();
+      }
+    } catch (error) {
+      console.error("Failed to send message", error);
     }
   };
 
@@ -93,14 +106,14 @@ const ChatroomPage = () => {
                 message.sender === "user" ? "mr-4" : "ml-4"
               }`}
               style={{
-                maxWidth: messageWidth, // Control width
-                height: messageHeight,  // Control height
+                maxWidth: "40%",  // Control width
+                height: "auto",   // Control height
               }}
             >
               <p>{message.text}</p>
             </div>
             <Image
-              src={`/images/${message.sender}-avatar.png`}
+              src={`/path/to/${message.sender}-avatar.png`} // Update with actual image path
               width={40}
               height={40}
               alt={`${message.sender} avatar`}
@@ -116,23 +129,16 @@ const ChatroomPage = () => {
           placeholder="Type your message..."
           className="flex-1 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black text-black"
           value={newMessage}
-          onChange={(e) => {
-            const words = e.target.value.trim().split(/\s+/);
-            if (words.length <= 500) {
-              setNewMessage(e.target.value);
-            } else {
-              alert("Word limit exceeded. You can only type up to 500 words.");
-            }
-          }}
+          onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              handleSendMessage();
+              sendMessage();
             }
           }}
         />
         <button
           className="bg-black text-white px-4 py-2 rounded-md ml-4 hover:bg-gray-800"
-          onClick={handleSendMessage}
+          onClick={sendMessage}
         >
           <FaCommentAlt />
         </button>

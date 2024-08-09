@@ -1,7 +1,11 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { ToastProvider,useToasts } from "react-toast-notifications";
+import { auth } from "../../../../../config/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const signUpSchema = Yup.object().shape({
   email: Yup.string()
@@ -20,6 +24,10 @@ const signUpSchema = Yup.object().shape({
 });
 
 const Login = () => {
+  const { addToast } = useToasts();
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -27,11 +35,31 @@ const Login = () => {
     },
     validationSchema: signUpSchema,
     onSubmit: (values) => {
-      console.log("Form Submitted:", values);
+      setLoading(true);
+      signInWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential) => {
+          setLoading(false);
+          addToast("You have successfully logged in to your account", {
+            appearance: "success",
+            autoDismiss: true,
+          });
+          router.push("/supportroom");
+        })
+        .catch((error) => {
+          setLoading(false);
+          addToast(
+            "There was an error logging in to your account. Please try again",
+            {
+              appearance: "error",
+              autoDismiss: true,
+            }
+          );
+        });
     },
   });
 
   return (
+   
     <form
       onSubmit={formik.handleSubmit}
       className="flex flex-col justify-center items-start gap-7"
@@ -81,11 +109,12 @@ const Login = () => {
       <button
         type="submit"
         className="mt-4 w-full px-6 py-3 bg-lime-300 text-black font-medium rounded-md"
-        disabled={!(formik.isValid && formik.dirty)}
+        disabled={!(formik.isValid && formik.dirty) || loading}
       >
-        Login to your account
+        {loading ? "Logging in..." : "Login to your account"}
       </button>
     </form>
+  
   );
 };
 

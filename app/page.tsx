@@ -1,4 +1,11 @@
 "use client";
+import * as React from 'react';
+import Timeline from '@mui/lab/Timeline';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineContent from '@mui/lab/TimelineContent';
+import TimelineDot from '@mui/lab/TimelineDot';
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,6 +79,7 @@ export default function Home() {
         </h6>
       </div>
       <Header /> {/* Use the Header component */}
+
       <section className="px-12 py-5 flex flex-col justify-center items-center mt-[7.5rem]">
         <h1 className="text-white font-extrabold text-[4rem] leading-tight text-center">
           Experience the future of customer support with <span className="text-lime-200">Quanta .</span>
@@ -109,8 +117,12 @@ export default function Home() {
           <FeaturesCard feature="Intelligent Chatbot" bgColor="bg-purple-200" textColor="text-purple-500" shadowColor="shadow-purple-300" />
         </div>
       </section>
+      <section id="team" className="flex justify-center items-center">
+        <h2>Meet Our Team</h2>
+      </section>
       
-        
+
+      
 
       {/* Meet Our Team Section */}
       <section
@@ -224,7 +236,56 @@ export default function Home() {
           />
         </div>
       </section>
-
+      <section id="build-process" className="px-12 py-5 flex flex-col justify-center items-center gap-10 mt-28">
+        <div className="space-y-2 flex flex-col justify-center items-center">
+          <p className="text-lg text-white font-light">Our Journey</p>
+          <h2 className="font-medium text-5xl text-lime-200">Build Process Timeline</h2>
+          <p className="text-white text-md font-light md:w-3/5 text-center">
+            Follow our step-by-step journey in creating this amazing website. From initial planning to final deployment, see how we brought our vision to life.
+          </p>
+        </div>
+        <Timeline position="alternate-reverse">
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <div className="bg-lime-200 p-4 rounded-md">
+                <p className="text-black">
+                  <strong>Day 1:</strong> Planning & Design - We started with brainstorming sessions and wireframing the initial design. Tools like Figma were used to create mockups and gather feedback.
+                </p>
+              </div>
+            </TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <div className="bg-lime-200 p-4 rounded-md">
+                <p className="text-black">
+                  <strong>Day 2:</strong> Development - The development phase began with setting up the project structure, integrating Next.js for the frontend, and Tailwind CSS for styling. We also set up the backend using Node.js and MongoDB.
+                </p>
+              </div>
+            </TimelineContent>
+          </TimelineItem>
+          <TimelineItem>
+            <TimelineSeparator>
+              <TimelineDot />
+              <TimelineConnector />
+            </TimelineSeparator>
+            <TimelineContent>
+              <div className="bg-lime-200 p-4 rounded-md">
+                <p className="text-black">
+                  <strong>Day 3:</strong> Testing & Deployment - We conducted thorough testing to ensure everything worked seamlessly. After final reviews and adjustments, the website was deployed on AWS, making it live for users.
+                </p>
+              </div>
+            </TimelineContent>
+          </TimelineItem>
+        </Timeline>
+      </section>
       <section className=" flex flex-col justify-center items-center gap-3">
       <div className="px-5 space-y-2 flex flex-col justify-center items-center text-center mt-28">
           <p className="text-lg text-white font-light">Reach Out To Support</p>
@@ -239,6 +300,7 @@ export default function Home() {
           <SupportForm/>
         </div>
       </section>
+
       <footer className="px-12 py-5 flex justify-between items-center mt-28 pb-2">
         <div className="flex justify-center items-center gap-3 group border border-white rounded-md px-8 py-4">
         <FaRegEye size={14} className="hidden group-hover:block text-white transition ease-in-out" />

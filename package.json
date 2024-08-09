@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mui/lab": "^5.0.0-alpha.173",
     "@openrouter/ai-sdk-provider": "^0.0.4",
     "ai": "^3.3.4",
     "aos": "^3.0.0-beta.6",

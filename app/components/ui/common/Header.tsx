@@ -18,7 +18,11 @@ export default function Header() {
     <section className="px-12 py-5 data-scroll-section">
       <nav className="flex justify-between items-center">
         <div className="logo">
-          <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
+          <Link href="/">
+            <a>
+              <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
+            </a>
+          </Link>
         </div>
         <div className="md:hidden z-50">
           <button
@@ -46,23 +50,35 @@ export default function Header() {
         </div>
         <div className="hidden md:flex justify-center items-center gap-10">
           <h6 className="text-white font-light hover:underline">
-            <Link href="">Features</Link>
+            <Link href="#features">
+              <a>Features</a>
+            </Link>
           </h6>
           <h6 className="text-white font-light hover:underline">
-            <Link href="">Meet Our Team</Link>
+            <Link href="#team">
+              <a>Meet Our Team</a>
+            </Link>
           </h6>
           <h6 className="text-white font-light hover:underline">
-            <Link href="">Technologies</Link>
+            <Link href="#technologies">
+              <a>Technologies</a>
+            </Link>
           </h6>
           <h6 className="text-white font-light hover:underline">
-            <Link href="/supportroom">Support</Link>
+            <Link href="/supportroom">
+              <a>Support</a>
+            </Link>
           </h6>
           <div className="flex justify-center items-center gap-6">
             <button className="bg-white p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-              <Link href="/auth/signup">Get Started</Link>
+              <Link href="/auth/signup">
+                <a>Get Started</a>
+              </Link>
             </button>
             <button className="bg-lime-200 p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-              <Link href="/auth/login">Login to account</Link>
+              <Link href="/auth/login">
+                <a>Login to account</a>
+              </Link>
             </button>
           </div>
         </div>
@@ -91,30 +107,34 @@ export default function Header() {
             </svg>
           </button>
           <h6 className="text-white text-2xl font-light hover:underline">
-            <Link href="" onClick={() => setMenuOpen(false)}>
-              Features
+            <Link href="#features" onClick={() => setMenuOpen(false)}>
+              <a>Features</a>
             </Link>
           </h6>
           <h6 className="text-white text-2xl font-light hover:underline">
-            <Link href="" onClick={() => setMenuOpen(false)}>
-              Meet Our Team
+            <Link href="#team" onClick={() => setMenuOpen(false)}>
+              <a>Meet Our Team</a>
             </Link>
           </h6>
           <h6 className="text-white text-2xl font-light hover:underline">
-            <Link href="" onClick={() => setMenuOpen(false)}>
-              The Building Process
+            <Link href="#technologies" onClick={() => setMenuOpen(false)}>
+              <a>Technologies</a>
             </Link>
           </h6>
           <h6 className="text-white text-2xl font-light hover:underline">
-            <Link href="" onClick={() => setMenuOpen(false)}>
-              Support
+            <Link href="/supportroom" onClick={() => setMenuOpen(false)}>
+              <a>Support</a>
             </Link>
           </h6>
           <button className="bg-white p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-            <Link href="/auth/signup" onClick={() => setMenuOpen(false)}>Get Started</Link>
+            <Link href="/auth/signup" onClick={() => setMenuOpen(false)}>
+              <a>Get Started</a>
+            </Link>
           </button>
           <button className="bg-lime-200 p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-            <Link href="/auth/login" onClick={() => setMenuOpen(false)}>Login to account</Link>
+            <Link href="/auth/login" onClick={() => setMenuOpen(false)}>
+              <a>Login to account</a>
+            </Link>
           </button>
         </div>
       )}

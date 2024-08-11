@@ -157,7 +157,9 @@ const ChatroomPage: React.FC = () => {
       <section className="px-12 py-5 data-scroll-section">
         <nav className="flex justify-between items-center">
           <div className="logo">
-            <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
+            <Link href="/">
+              <span className="text-black font-extrabold text-5xl">Q.</span>
+            </Link>
           </div>
           <div className="flex justify-center items-center gap-6">
            

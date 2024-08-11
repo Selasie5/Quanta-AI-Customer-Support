@@ -303,10 +303,12 @@ export default function Home() {
 
       <footer className="px-12 py-5 flex justify-between items-center mt-28 pb-2">
         <div className="flex justify-center items-center gap-3 group border border-white rounded-md px-8 py-4">
+          <Link href="https://github.com/Selasie5/AI-Customer-Support-Software">
         <FaRegEye size={14} className="hidden group-hover:block text-white transition ease-in-out" />
           <span className="text-white font-light hover:font-bold">
           View Project Github
           </span>
+          </Link>
         </div>
         <div>
           <p>&copy;Copyright 2024. Team Quanta</p>

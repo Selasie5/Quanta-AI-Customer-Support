@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { FaCommentAlt } from "react-icons/fa";
+import { useAuth } from "../context/AuthProvider";
 
 interface Message {
   id: number;
@@ -10,6 +11,7 @@ interface Message {
 }
 
 const ChatroomPage: React.FC = () => {
+  const {user} = useAuth();
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,

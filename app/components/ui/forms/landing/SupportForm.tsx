@@ -43,7 +43,7 @@ const SupportForm = () => {
     className='md:px-0 flex flex-col justify-center items-start gap-7'>
        <div className="flex flex-col md:flex-row justify-center items-center gap-7 md:gap-[5rem] ">
         <div className="flex flex-col justify-center items-start gap-2">
-          <label htmlFor="firstName" className="text-gray-600">
+          <label htmlFor="firstName" className="text-white">
             First Name
           </label>
           <input
@@ -66,7 +66,7 @@ const SupportForm = () => {
           )}
         </div>
         <div className="flex flex-col justify-center items-start gap-2">
-          <label htmlFor="lastName" className="text-gray-600">
+          <label htmlFor="lastName" className="text-white">
             Last Name
           </label>
           <input
@@ -88,7 +88,7 @@ const SupportForm = () => {
         </div>
       </div>
       <div className="flex flex-col justify-center items-start gap-2 w-full">
-        <label htmlFor="email" className="text-gray-600">
+        <label htmlFor="email" className="text-white">
           E-mail
         </label>
         <input
@@ -107,7 +107,7 @@ const SupportForm = () => {
         )}
       </div>
       <div className="flex flex-col justify-center items-start gap-2 w-full">
-        <label htmlFor="subject" className="text-gray-600">
+        <label htmlFor="subject" className="text-white">
           Subject
         </label>
         <input
@@ -128,7 +128,7 @@ const SupportForm = () => {
         )}
       </div>
       <div className="flex flex-col justify-center items-start gap-2 w-full">
-  <label htmlFor="subject" className="text-gray-600">
+  <label htmlFor="subject" className="text-white">
     Message
   </label>
   <textarea
@@ -149,7 +149,7 @@ const SupportForm = () => {
   )}
 </div>
 <div className="flex flex-col justify-center items-start gap-2 w-full">
-        <label htmlFor="business" className="text-gray-600">
+        <label htmlFor="business" className="text-white">
           Other (Optional)
         </label>
         <input

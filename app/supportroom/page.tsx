@@ -165,40 +165,37 @@ const ChatroomPage: React.FC = () => {
         </nav>
       </section>
       <div className="flex-1 bg-black px-8 py-6 overflow-y-auto">
-      
-        {messages.map((message) => (
-          <div
-            key={message.id}
-            className={`chat-message my-4 ${
-              message.sender === "user" ? "justify-end" : ""
-            } flex items-start`}
-          >
-            <div
-              className={`bg-${
-                message.sender === "user" ? "lime-200" : "white"
-              } text-${message.sender === "user" ? "black" : "black"} rounded-lg p-4 ${
-                message.sender === "user" ? "mr-4" : "ml-4"
-              }`}
-              style={{
-                maxWidth: "40%",
-                height: "auto",
-              }}
-            >
-              <p>{message.text}</p>
-            </div>
-            {message.sender === "bot" && loading && (
-              <p className="text-white text-left">Loading...</p>
-            )}
-            <Image
-              src="/avatar-7.png"
-              width={40}
-              height={40}
-              alt={`${message.sender} avatar`}
-              className="rounded-full"
-            />
-          </div>
-        ))}
+  {messages.map((message) => (
+    <div
+      key={message.id}
+      className={`chat-message my-4 ${
+        message.sender === "user" ? "justify-end" : ""
+      } flex items-start`}
+    >
+      <div
+        className={`bg-${
+          message.sender === "user" ? "lime-200" : "white"
+        } text-${message.sender === "user" ? "black" : "black"} rounded-lg p-4 ${
+          message.sender === "user" ? "mr-4" : "ml-4"
+        }`}
+        style={{
+          maxWidth: "40%",
+          height: "auto",
+        }}
+      >
+        <p>{message.text}</p>
       </div>
+      <Image
+        src={message.sender === "user" ? user?.photoURL || "/hero-3.png" : "/astronaut.png"}
+        width={40}
+        height={40}
+        alt={`${message.sender} avatar`}
+        className="rounded-full"
+      />
+    </div>
+  ))}
+</div>
+
 
       <div className="bg-lime-200 border-t border-black px-8 py-4 flex items-center">
         <input

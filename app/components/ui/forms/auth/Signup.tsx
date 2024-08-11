@@ -3,9 +3,11 @@ import React,{useState} from "react";
 import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword,signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import {auth} from "../../../../../config/firebase"
+import { ToastProvider,useToasts } from "react-toast-notifications";
+
 
 const signUpSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -39,7 +41,7 @@ const signUpSchema = Yup.object().shape({
 
 const Signup = () => {
   const [loading, setLoading] = useState(false);
-
+  const { addToast } = useToasts();
   const router = useRouter();
   const formik = useFormik({
     initialValues: {
@@ -59,18 +61,57 @@ const Signup = () => {
         .then((userCredential)=>
         {
           const user = userCredential.user
+          addToast("You have successfully logged in to your account", {
+            appearance: "success",
+            autoDismiss: true,
+          });
           router.push("/supportroom")
         })
         .catch((Error)=>
         {
+          addToast(
+            "There was an error logging in to your account. Please try again",
+            {
+              appearance: "error",
+              autoDismiss: true,
+            }),
           setLoading(false);
           console.error(Error)
+          
         })
        } catch (error) {
         console.error(error)
        }
     },
   });
+  const provider= new GoogleAuthProvider();
+  //Google signup
+  const signInWithGoogle = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log("User signed in: ", user);
+        console.log("Access token: ", token);
+      
+        router.push("/dashboard")
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData ? error.customData.email : null;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.error("Error signing in: ", errorCode, errorMessage);
+        
+        if (email) console.error("Email: ", email);
+        if (credential) console.error("Credential: ", credential);
+      });
+  };
+
 
   return (
     <form
@@ -222,6 +263,7 @@ const Signup = () => {
           <div className="w-full">
             <button
               type="submit"
+              onClick={signInWithGoogle}
               className=" flex justify-center items-center gap-3 mt-4 w-full px-6 py-3 bg-gray-200 text-black font-medium rounded-md"
             >
               <Image src="/google.svg" width={20} height={50} alt="Google" />

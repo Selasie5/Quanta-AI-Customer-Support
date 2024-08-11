@@ -100,7 +100,7 @@ export default function Home() {
           />
         </div>
       </section>
-      <section id="features" className=" px-2 md:px-12 py-5 flex-col md:flex justify-center items-center gap-28 mt-28">
+      <section id="features" className=" px-2 md:px-12 py-5 flex-col flex md:flex-row justify-center items-center gap-28 mt-28">
         <div className=" w-full md:w-2/5 space-y-2">
           <h4 className="font-light text-lg text-white">Why Choose Quanta?</h4>
           <h5 className="font-medium text-5xl text-lime-200">Efficient support, anytime anywhere</h5>

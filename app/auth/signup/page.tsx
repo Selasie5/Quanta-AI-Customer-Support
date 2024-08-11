@@ -2,10 +2,12 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Signup from "@/app/components/ui/forms/auth/Signup";
+import { ToastProvider } from "react-toast-notifications";
 
 const page = () => {
   return (
     <>
+    <ToastProvider placement="top-right" autoDismiss={true}>
       <section className="font-Grosteque px-4 md:px-12 py-5">
         <nav className=" flex justify-between items-center">
           <div className="logo">
@@ -37,6 +39,7 @@ const page = () => {
          
         </section>
       </section>
+      </ToastProvider>
     </>
   );
 };

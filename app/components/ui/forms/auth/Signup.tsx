@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React,{useState} from "react";
 import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -38,6 +38,7 @@ const signUpSchema = Yup.object().shape({
 });
 
 const Signup = () => {
+  const [loading, setLoading] = useState(false);
 
   const router = useRouter();
   const formik = useFormik({
@@ -51,6 +52,7 @@ const Signup = () => {
     },
     validationSchema: signUpSchema,
     onSubmit: (values) => {
+      setLoading(true);
       console.log("Form Submitted:", values);
        try {
         createUserWithEmailAndPassword(auth, values.email, values.password)
@@ -61,6 +63,7 @@ const Signup = () => {
         })
         .catch((Error)=>
         {
+          setLoading(false);
           console.error(Error)
         })
        } catch (error) {
@@ -214,7 +217,11 @@ const Signup = () => {
         className="mt-4 w-full px-6 py-3 bg-lime-300 text-black font-medium rounded-md"
         disabled={!(formik.isValid && formik.dirty)}
       >
-        Sign Up
+       {loading ? (
+          <div className="loader">
+
+          </div>
+        ) : "Create your account"}
       </button>
           <div className="w-full">
             <button

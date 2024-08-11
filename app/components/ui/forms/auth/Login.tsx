@@ -111,7 +111,11 @@ const Login = () => {
         className="mt-4 w-full px-6 py-3 bg-lime-300 text-black font-medium rounded-md"
         disabled={!(formik.isValid && formik.dirty) || loading}
       >
-        {loading ? "Logging in..." : "Login to your account"}
+        {loading ? (
+          <div className="loader">
+
+          </div>
+        ) : "Login to your account"}
       </button>
     </form>
   

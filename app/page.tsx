@@ -40,7 +40,7 @@ export default function Home() {
     {
       id: 1,
       name: "Selasie Sepenu",
-      image: "/me.png",
+      image: "/me.jpg",
       role: " AI Software Engineer",
       experience:
         "Collaborating on this project was a fantastic experience. We turned challenges into opportunities and learned so much along the way.",

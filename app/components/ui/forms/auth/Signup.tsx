@@ -218,7 +218,7 @@ const Signup = () => {
         disabled={!(formik.isValid && formik.dirty)}
       >
        {loading ? (
-          <div className="loader">
+          <div className="loader flex justify-center items-center">
 
           </div>
         ) : "Create your account"}

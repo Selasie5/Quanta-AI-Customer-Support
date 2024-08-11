@@ -112,7 +112,7 @@ const Login = () => {
         disabled={!(formik.isValid && formik.dirty) || loading}
       >
         {loading ? (
-          <div className="loader">
+          <div className="loader flex justify-center items-center">
 
           </div>
         ) : "Login to your account"}

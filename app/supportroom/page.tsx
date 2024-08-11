@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaCommentAlt } from "react-icons/fa";
@@ -10,24 +10,32 @@ interface Message {
   text: string;
 }
 
+const languages = [
+  { code: 'en', name: 'English' },
+  { code: 'es', name: 'Spanish' },
+  { code: 'fr', name: 'French' },
+  // Add more languages as needed
+];
+
 const ChatroomPage: React.FC = () => {
   const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [sessionId, setSessionId] = useState<string>("");
+  const [sessionId, setSessionId] = useState<string>(""); // Ensure a valid sessionId
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('en'); // Default language
 
   useEffect(() => {
-    // Initialize sessionId when user is authenticated
     if (user?.uid) {
       setSessionId(user.uid);
     } else {
-      setSessionId("guest"); // Default value if user is not authenticated
+      // Handle case where user is not authenticated or UID is not available
+      setSessionId("default_session_id");
     }
   }, [user]);
 
   const sendMessage = async () => {
-    if (newMessage.trim() === "" || !sessionId) return;
+    if (newMessage.trim() === "") return;
 
     const userMessage: Message = {
       id: messages.length + 1,
@@ -41,12 +49,18 @@ const ChatroomPage: React.FC = () => {
     setLoading(true); // Set loading state
 
     try {
+      console.log("Sending message with sessionId:", sessionId);
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ sessionId, message: newMessage }),
+        body: JSON.stringify({
+          sessionId: sessionId || "default_session_id", // Ensure sessionId is set
+          message: newMessage,
+          language: selectedLanguage,
+        }),
       });
 
       if (!response.ok) {
@@ -54,6 +68,8 @@ const ChatroomPage: React.FC = () => {
       }
 
       const data = await response.json();
+      console.log("Received response:", data);
+
       const botMessage: Message = {
         id: messages.length + 2,
         sender: "bot",
@@ -76,6 +92,19 @@ const ChatroomPage: React.FC = () => {
         <nav className="flex justify-between items-center">
           <div className="logo">
             <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
+          </div>
+          <div className="language-select">
+            <select
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+              className="bg-black text-white border border-lime-200 rounded-lg px-4 py-2"
+            >
+              {languages.map((lang) => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
           </div>
         </nav>
       </section>

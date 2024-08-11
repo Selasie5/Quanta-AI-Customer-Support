@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { ChatAnthropic } from '@langchain/anthropic';
 import { ChatFireworks } from "@langchain/community/chat_models/fireworks";
 import { InMemoryChatMessageHistory } from '@langchain/core/chat_history';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
@@ -35,27 +34,53 @@ const withMessageHistory = new RunnableWithMessageHistory({
 
 export async function POST(req: NextRequest) {
   try {
-    const { sessionId, message } = await req.json();
+    const { sessionId, message, language } = await req.json();
 
-    if (!sessionId || !message) {
-      console.error("Missing sessionId or message.");
-      return NextResponse.json({ error: "Missing sessionId or message." }, { status: 400 });
+    if (!sessionId || sessionId.trim() === "" || !message || !language) {
+      console.error("Missing sessionId, message, or language.");
+      return NextResponse.json({ error: "Missing sessionId, message, or language." }, { status: 400 });
     }
 
+    // Ensure the language is passed correctly
     const config = {
       configurable: {
         sessionId,
+        language, // Ensure the language parameter is used in the model configuration
       },
     };
 
-    const response = await withMessageHistory.invoke(
-      {
-        input: message,
-      },
-      config
-    );
+    const responseStream = new ReadableStream({
+      async start(controller) {
+        try {
+          const response = await withMessageHistory.invoke(
+            { input: message },
+            config
+          );
 
-    return NextResponse.json({ response: response.content });
+          let content: string;
+
+          if (typeof response.content === 'string') {
+            content = response.content;
+          } else if (Array.isArray(response.content)) {
+            content = response.content.join(''); // Join array elements into a string
+          } else {
+            content = JSON.stringify(response.content);
+          }
+
+          // Send JSON object as response
+          controller.enqueue(new TextEncoder().encode(JSON.stringify({ response: content })));
+          controller.close();
+        } catch (error) {
+          console.error("Error handling chat request:", error);
+          controller.error(error);
+        }
+      }
+    });
+
+    return new NextResponse(responseStream, {
+      headers: { 'Content-Type': 'application/json' },
+    });
+
   } catch (error) {
     console.error("Error handling chat request:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

@@ -1,7 +1,11 @@
 "use client";
 import React from "react";
+import Image from "next/image";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from "next/navigation";
+import {auth} from "../../../../../config/firebase"
 
 const signUpSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -34,6 +38,8 @@ const signUpSchema = Yup.object().shape({
 });
 
 const Signup = () => {
+
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -46,6 +52,20 @@ const Signup = () => {
     validationSchema: signUpSchema,
     onSubmit: (values) => {
       console.log("Form Submitted:", values);
+       try {
+        createUserWithEmailAndPassword(auth, values.email, values.password)
+        .then((userCredential)=>
+        {
+          const user = userCredential.user
+          router.push("/supportroom")
+        })
+        .catch((Error)=>
+        {
+          console.error(Error)
+        })
+       } catch (error) {
+        console.error(error)
+       }
     },
   });
 
@@ -196,6 +216,15 @@ const Signup = () => {
       >
         Sign Up
       </button>
+          <div className="w-full">
+            <button
+              type="submit"
+              className=" flex justify-center items-center gap-3 mt-4 w-full px-6 py-3 bg-gray-200 text-black font-medium rounded-md"
+            >
+              <Image src="/google.svg" width={20} height={50} alt="Google" />
+              Sign Up With Google
+            </button>
+          </div>
     </form>
   );
 };

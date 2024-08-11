@@ -1,11 +1,12 @@
+"use client"
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Login from "@/app/components/ui/forms/auth/Login";
-
+import { ToastProvider} from "react-toast-notifications";
 const page = () => {
   return (
-    <>
+    <ToastProvider placement="top-right" autoDismiss={true}>
       <section className="font-Grosteque px-12 py-5">
         <nav className=" flex justify-between items-center">
           <div className="logo">
@@ -48,7 +49,7 @@ const page = () => {
           </div>
         </section>
       </section>
-    </>
+      </ToastProvider>
   );
 };
 

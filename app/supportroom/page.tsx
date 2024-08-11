@@ -1,73 +1,133 @@
-"use client";
-import React, { useState } from "react";
+"use client"
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { FaCommentAlt } from "react-icons/fa";
+import { useAuth } from "../context/AuthProvider";
+import FeedbackForm from "../components/ui/forms/FeedbackForm";
 
+interface Message {
+  id: number;
+  sender: "user" | "bot";
+  text: string;
+}
 
-const ChatroomPage = () => {
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: "bot",
-      text: "Hello, how can I assist you today?",
-    },
-    {
-      id: 2,
-      sender: "user",
-      text: "I'm interested in your AI-powered customer support solution. Can you tell me more about it?",
-    },
-    {
-      id: 3,
-      sender: "bot",
-      text: "Absolutely! Quanta is an AI-driven platform that delivers instant, accurate, and personalized responses to your customers, ensuring unparalleled satisfaction and efficiency.",
-    },
-  ]);
-  const [newMessage, setNewMessage] = useState("");
+const languages = [
+  { code: 'en', name: 'English' },
+  { code: 'es', name: 'Spanish' },
+  { code: 'fr', name: 'French' },
+  { code: 'de', name: 'German' },
+  { code: 'it', name: 'Italian' },
+  { code: 'pt', name: 'Portuguese' },
+  { code: 'ru', name: 'Russian' },
+  { code: 'zh', name: 'Chinese' },
+  { code: 'ja', name: 'Japanese' },
+  { code: 'ko', name: 'Korean' },
+  { code: 'ar', name: 'Arabic' },
+  { code: 'hi', name: 'Hindi' },
+  { code: 'bn', name: 'Bengali' },
+  { code: 'pa', name: 'Punjabi' },
+  { code: 'tr', name: 'Turkish' },
+  { code: 'vi', name: 'Vietnamese' },
+  { code: 'pl', name: 'Polish' },
+  { code: 'uk', name: 'Ukrainian' },
+  { code: 'he', name: 'Hebrew' },
+  { code: 'sv', name: 'Swedish' },
+  { code: 'no', name: 'Norwegian' },
+  { code: 'da', name: 'Danish' },
+  { code: 'fi', name: 'Finnish' },
+  { code: 'cs', name: 'Czech' },
+  { code: 'hu', name: 'Hungarian' },
+  { code: 'ro', name: 'Romanian' },
+  { code: 'sk', name: 'Slovak' },
+  { code: 'el', name: 'Greek' },
+  { code: 'th', name: 'Thai' },
+  { code: 'ms', name: 'Malay' },
+  { code: 'id', name: 'Indonesian' },
+  { code: 'tl', name: 'Tagalog' },
+  { code: 'my', name: 'Burmese' },
+  { code: 'km', name: 'Khmer' },
+  { code: 'la', name: 'Lao' },
+  { code: 'ne', name: 'Nepali' },
+  { code: 'si', name: 'Sinhalese' },
+  { code: 'sw', name: 'Swahili' },
+  { code: 'cy', name: 'Welsh' },
+  { code: 'hr', name: 'Croatian' },
+  { code: 'sr', name: 'Serbian' },
+  { code: 'bg', name: 'Bulgarian' },
+  { code: 'lt', name: 'Lithuanian' },
+  { code: 'lv', name: 'Latvian' },
+  { code: 'et', name: 'Estonian' },
+  { code: 'mt', name: 'Maltese' },
+  // Add more languages as needed
+];
 
-  // State variables for controlling the size of chat messages
-  const [messageWidth, setMessageWidth] = useState("40%");
-  const [messageHeight, setMessageHeight] = useState("auto");
+const ChatroomPage: React.FC = () => {
+  const { user } = useAuth();
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [newMessage, setNewMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [sessionId, setSessionId] = useState<string>(""); // Ensure a valid sessionId
+  const [selectedLanguage, setSelectedLanguage] = useState<string>('en'); // Default language
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [lastMessageId, setLastMessageId] = useState<string>("");
 
-  const countWords = (text: string) => {
-    return text.trim().split(/\s+/).length;
-  };
-
-  const countCharacters = (text: string) => {
-    return text.length;
-  };
-
-  const getTotalWordCount = () => {
-    return messages.reduce((total, message) => total + countWords(message.text), 0);
-  };
-
-  const getTotalCharacterCount = () => {
-    return messages.reduce((total, message) => total + countCharacters(message.text), 0);
-  };
-
-  const handleSendMessage = () => {
-    const totalWordCount = getTotalWordCount();
-    const totalCharacterCount = getTotalCharacterCount();
-    const newMessageWordCount = countWords(newMessage);
-    const newMessageCharacterCount = countCharacters(newMessage);
-
-    if (
-      newMessage.trim() !== "" &&
-      totalWordCount + newMessageWordCount <= 500 &&
-      totalCharacterCount + newMessageCharacterCount <= 2600
-    ) {
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        {
-          id: prevMessages.length + 1,
-          sender: "user",
-          text: newMessage,
-        },
-      ]);
-      setNewMessage("");
+  useEffect(() => {
+    if (user?.uid) {
+      setSessionId(user.uid);
     } else {
-      alert("Word or character limit exceeded. You can only send up to 500 words and 2600 characters in total.");
+      setSessionId("default_session_id");
     }
+  }, [user]);
+
+  const sendMessage = async () => {
+    if (newMessage.trim() === "") return;
+
+    const userMessage: Message = {
+      id: messages.length + 1,
+      sender: "user",
+      text: newMessage,
+    };
+
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setNewMessage("");
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sessionId: sessionId || "default_session_id",
+          message: newMessage,
+          language: selectedLanguage,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      const botMessage: Message = {
+        id: messages.length + 2,
+        sender: "bot",
+        text: data.response,
+      };
+
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
+      setLastMessageId(botMessage.id.toString());
+      setShowFeedback(true);
+    } catch (error) {
+      console.error('Error sending message:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFeedbackSubmitted = () => {
+    setShowFeedback(false);
   };
 
   return (
@@ -76,6 +136,19 @@ const ChatroomPage = () => {
         <nav className="flex justify-between items-center">
           <div className="logo">
             <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
+          </div>
+          <div className="language-select">
+            <select
+              value={selectedLanguage}
+              onChange={(e) => setSelectedLanguage(e.target.value)}
+              className="bg-black text-white border border-lime-200 rounded-lg px-4 py-2"
+            >
+              {languages.map((lang) => (
+                <option key={lang.code} value={lang.code}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
           </div>
         </nav>
       </section>
@@ -94,14 +167,14 @@ const ChatroomPage = () => {
                 message.sender === "user" ? "mr-4" : "ml-4"
               }`}
               style={{
-                maxWidth: messageWidth, // Control width
-                height: messageHeight,  // Control height
+                maxWidth: "40%",
+                height: "auto",
               }}
             >
               <p>{message.text}</p>
             </div>
             <Image
-              src={`/images/${message.sender}-avatar.png`}
+              src="/avatar-7.png"
               width={40}
               height={40}
               alt={`${message.sender} avatar`}
@@ -109,6 +182,7 @@ const ChatroomPage = () => {
             />
           </div>
         ))}
+        {loading && <p className="text-white text-center">Loading...</p>}
       </div>
 
       <div className="bg-lime-200 border-t border-black px-8 py-4 flex items-center">
@@ -117,29 +191,32 @@ const ChatroomPage = () => {
           placeholder="Type your message..."
           className="flex-1 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-black text-black"
           value={newMessage}
-          onChange={(e) => {
-            const words = e.target.value.trim().split(/\s+/);
-            if (words.length <= 500) {
-              setNewMessage(e.target.value);
-            } else {
-              alert("Word limit exceeded. You can only type up to 500 words.");
-            }
-          }}
+          onChange={(e) => setNewMessage(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              handleSendMessage();
+              sendMessage();
             }
           }}
         />
         <button
           className="bg-black text-white px-4 py-2 rounded-md ml-4 hover:bg-gray-800"
-          onClick={handleSendMessage}
+          onClick={sendMessage}
+          disabled={loading}
         >
           <FaCommentAlt />
         </button>
       </div>
+
+      {showFeedback && lastMessageId && (
+        <FeedbackForm
+          sessionId={sessionId || "default_session_id"}
+          messageId={lastMessageId}
+          onFeedbackSubmitted={handleFeedbackSubmitted}
+        />
+      )}
     </div>
   );
 };
 
 export default ChatroomPage;
+

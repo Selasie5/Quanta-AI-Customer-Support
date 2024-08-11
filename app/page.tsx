@@ -79,7 +79,8 @@ export default function Home() {
         </h6>
       </div>
       <Header /> {/* Use the Header component */}
-      <section className="flex flex-col justify-center items-center mt-[7.5rem]">
+
+      <section className="px-12 py-5 flex flex-col justify-center items-center mt-[7.5rem]">
         <h1 className="text-white font-extrabold text-[4rem] leading-tight text-center">
           Experience the future of customer support with <span className="text-lime-200">Quanta .</span>
         </h1>
@@ -299,6 +300,7 @@ export default function Home() {
           <SupportForm/>
         </div>
       </section>
+
       <footer className="px-12 py-5 flex justify-between items-center mt-28 pb-2">
         <div className="flex justify-center items-center gap-3 group border border-white rounded-md px-8 py-4">
         <FaRegEye size={14} className="hidden group-hover:block text-white transition ease-in-out" />

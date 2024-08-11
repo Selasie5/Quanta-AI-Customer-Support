@@ -32,20 +32,7 @@ const page = () => {
           <div>
             <Signup />
           </div>
-          <div className="flex justify-center items-center gap-2">
-            <hr className="w-16" />
-            <span className="text-gray-300">or</span>
-            <hr className="w-16" />
-          </div>
-          <div className="w-1/2">
-            <button
-              type="submit"
-              className=" flex justify-center items-center gap-3 mt-4 w-full px-6 py-3 bg-gray-200 text-black font-medium rounded-md"
-            >
-              <Image src="/google.svg" width={20} height={50} alt="Google" />
-              Sign Up With Google
-            </button>
-          </div>
+         
         </section>
       </section>
     </>

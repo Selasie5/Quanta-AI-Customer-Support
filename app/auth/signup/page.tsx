@@ -6,7 +6,7 @@ import Signup from "@/app/components/ui/forms/auth/Signup";
 const page = () => {
   return (
     <>
-      <section className="font-Grosteque px-12 py-5">
+      <section className="font-Grosteque px-4 md:px-12 py-5">
         <nav className=" flex justify-between items-center">
           <div className="logo">
             <Link href="/">
@@ -31,7 +31,7 @@ const page = () => {
               Create an account and revolutionize customer support with AI.
             </p>
           </div>
-          <div>
+          <div className="w-full md:w-1/2">
             <Signup />
           </div>
          

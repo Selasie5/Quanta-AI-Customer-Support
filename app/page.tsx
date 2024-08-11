@@ -73,18 +73,18 @@ export default function Home() {
     <main className=" font-Grosteque h-fit bg-black">
       {/* Banner */}
       <div className="bg-lime-200 h-12 flex justify-center items-center">
-        <h6 className="font-Manrope font-medium text-black">
+        <h6 className="font-Manrope font-medium text-black text-center">
           This application was built by a team of experienced developed.
           <span className="underline font-bold">Hire us</span>
         </h6>
       </div>
       <Header /> {/* Use the Header component */}
 
-      <section className="px-12 py-5 flex flex-col justify-center items-center mt-[7.5rem]">
+      <section className=" px-2 md:px-12 py-5 flex flex-col justify-center items-center mt-[7.5rem]">
         <h1 className="text-white font-extrabold text-[4rem] leading-tight text-center">
           Experience the future of customer support with <span className="text-lime-200">Quanta .</span>
         </h1>
-        <p className="text-white font-light text-md w-2/3 text-center">
+        <p className="text-white font-light text-md md:w-2/3 text-center">
           Our AI-driven platform delivers instant, accurate, and personalized responses to your customers, ensuring unparalleled satisfaction and efficiency.
         </p>
         <div className="py-3">
@@ -100,15 +100,15 @@ export default function Home() {
           />
         </div>
       </section>
-      <section id="features" className="px-12 py-5 flex justify-center items-center gap-28 mt-28">
-        <div className="w-2/5 space-y-2">
+      <section id="features" className=" px-2 md:px-12 py-5 flex-col md:flex justify-center items-center gap-28 mt-28">
+        <div className=" w-full md:w-2/5 space-y-2">
           <h4 className="font-light text-lg text-white">Why Choose Quanta?</h4>
           <h5 className="font-medium text-5xl text-lime-200">Efficient support, anytime anywhere</h5>
           <p className="font-Manrope text-white text-md font-light">
             Quanta is your intelligent customer support solution, designed to provide seamless assistance to your customers 24/7. With cutting-edge AI technology and advanced deployment on AWS, Quanta ensures your customers receive accurate and prompt responses, enhancing their experience and satisfaction.
           </p>
         </div>
-        <div className="w-3/5 flex justify-center items-start gap-4 flex-wrap">
+        <div className="w-full pt-5 md:pt-0 md:w-3/5 flex  justify-start md:justify-center items-start gap-4 flex-wrap">
           <FeaturesCard feature="Advanced AI Integration" bgColor="bg-red-200" textColor="text-red-500" shadowColor="shadow-red-300" />
           <FeaturesCard feature="Robust Infrastructure" bgColor="bg-green-200" textColor="text-green-500" shadowColor="shadow-green-300" />
           <FeaturesCard feature="Enhanced User Experience" bgColor="bg-blue-200" textColor="text-blue-500" shadowColor="shadow-blue-300" />
@@ -141,7 +141,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col md:flex-row justify-center items-center gap-[6rem] mt-4 ">
           {TeamMembers.map((member, id) => (
-            <div key={member.id} className="bg-lime-200 w-72 p-5 flex flex-col justify-center items-start gap-2 rounded-md hover:shadow-lg hover:scale-105 transition ease-in-out">
+            <div key={member.id} className="bg-lime-200 md:w-72 p-5 flex flex-col justify-center items-start gap-2 rounded-md hover:shadow-lg hover:scale-105 transition ease-in-out">
               <Image
                 src={member.image}
                 alt="team-member-img"
@@ -174,7 +174,7 @@ export default function Home() {
           </h2>
           <p className=" text-white text-md font-light md:w-3/5 ">
             We&apos;ve assembled a stellar lineup of tech to bring our vision to
-            life. Here’s the secret sauce behind our project&apos;s success
+            life. Here&apos;s the secret sauce behind our project&apos;s success
           </p>
         </div>
         <div className="md:w-1/2 flex md:justify-center items-center gap-[2rem] flex-wrap">
@@ -239,7 +239,7 @@ export default function Home() {
       <section id="build-process" className="px-12 py-5 flex flex-col justify-center items-center gap-10 mt-28">
         <div className="space-y-2 flex flex-col justify-center items-center">
           <p className="text-lg text-white font-light">Our Journey</p>
-          <h2 className="font-medium text-5xl text-lime-200">Build Process Timeline</h2>
+          <h2 className="font-medium text-5xl text-lime-200 text-center">Build Process Timeline</h2>
           <p className="text-white text-md font-light md:w-3/5 text-center">
             Follow our step-by-step journey in creating this amazing website. From initial planning to final deployment, see how we brought our vision to life.
           </p>

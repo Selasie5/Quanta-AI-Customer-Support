@@ -7,7 +7,7 @@ import { ToastProvider} from "react-toast-notifications";
 const page = () => {
   return (
     <ToastProvider placement="top-right" autoDismiss={true}>
-      <section className="font-Grosteque px-12 py-5">
+      <section className="font-Grosteque px-3 md:px-12 py-5">
         <nav className=" flex justify-between items-center">
           <div className="logo">
             <Link href="/">
@@ -32,7 +32,7 @@ const page = () => {
               Let&apos;s get you back to assisting customers. Log in to continue.
             </p>
           </div>
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2">
             <Login />
           </div>
           <div className="flex justify-center items-center gap-2">
@@ -40,7 +40,7 @@ const page = () => {
             <span className="text-gray-300">or</span>
             <hr className="w-16" />
           </div>
-          <div className="w-1/2">
+          <div className="w-full md:w-1/2">
             <button
               type="submit"
               className=" flex justify-center items-center gap-3 mt-4 w-full px-6 py-3 bg-gray-200 text-black font-medium rounded-md"

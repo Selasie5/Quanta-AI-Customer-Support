@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaCommentAlt } from "react-icons/fa";
 import { useAuth } from "../context/AuthProvider";
+import FeedbackForm from "../components/ui/forms/FeedbackForm";
 
 interface Message {
   id: number;
@@ -60,7 +61,6 @@ const languages = [
   // Add more languages as needed
 ];
 
-
 const ChatroomPage: React.FC = () => {
   const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -68,12 +68,13 @@ const ChatroomPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [sessionId, setSessionId] = useState<string>(""); // Ensure a valid sessionId
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en'); // Default language
+  const [showFeedback, setShowFeedback] = useState<boolean>(false);
+  const [lastMessageId, setLastMessageId] = useState<string>("");
 
   useEffect(() => {
     if (user?.uid) {
       setSessionId(user.uid);
     } else {
-      // Handle case where user is not authenticated or UID is not available
       setSessionId("default_session_id");
     }
   }, [user]);
@@ -87,21 +88,18 @@ const ChatroomPage: React.FC = () => {
       text: newMessage,
     };
 
-    // Add the user's message to the state
     setMessages((prevMessages) => [...prevMessages, userMessage]);
-    setNewMessage(""); // Clear the input field
-    setLoading(true); // Set loading state
+    setNewMessage("");
+    setLoading(true);
 
     try {
-      console.log("Sending message with sessionId:", sessionId);
-
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          sessionId: sessionId || "default_session_id", // Ensure sessionId is set
+          sessionId: sessionId || "default_session_id",
           message: newMessage,
           language: selectedLanguage,
         }),
@@ -112,22 +110,24 @@ const ChatroomPage: React.FC = () => {
       }
 
       const data = await response.json();
-      console.log("Received response:", data);
-
       const botMessage: Message = {
         id: messages.length + 2,
         sender: "bot",
         text: data.response,
       };
 
-      // Add the bot's response to the state
       setMessages((prevMessages) => [...prevMessages, botMessage]);
+      setLastMessageId(botMessage.id.toString());
+      setShowFeedback(true);
     } catch (error) {
       console.error('Error sending message:', error);
-      // Optionally add an error message to the chat
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
+  };
+
+  const handleFeedbackSubmitted = () => {
+    setShowFeedback(false);
   };
 
   return (
@@ -167,14 +167,14 @@ const ChatroomPage: React.FC = () => {
                 message.sender === "user" ? "mr-4" : "ml-4"
               }`}
               style={{
-                maxWidth: "40%",  // Control width
-                height: "auto",   // Control height
+                maxWidth: "40%",
+                height: "auto",
               }}
             >
               <p>{message.text}</p>
             </div>
             <Image
-              src="/avatar-7.png" // Update with actual image path
+              src="/avatar-7.png"
               width={40}
               height={40}
               alt={`${message.sender} avatar`}
@@ -206,8 +206,17 @@ const ChatroomPage: React.FC = () => {
           <FaCommentAlt />
         </button>
       </div>
+
+      {showFeedback && lastMessageId && (
+        <FeedbackForm
+          sessionId={sessionId || "default_session_id"}
+          messageId={lastMessageId}
+          onFeedbackSubmitted={handleFeedbackSubmitted}
+        />
+      )}
     </div>
   );
 };
 
 export default ChatroomPage;
+

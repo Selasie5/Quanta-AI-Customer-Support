@@ -10,7 +10,9 @@ const page = () => {
       <section className="font-Grosteque px-12 py-5">
         <nav className=" flex justify-between items-center">
           <div className="logo">
-            <span className="text-black font-extrabold text-5xl">Q.</span>
+            <Link href="/landingpage">
+              <span className="text-black font-extrabold text-5xl">Q.</span>
+            </Link>
           </div>
           <div className="flex justify-center items-center gap-6">
             <h6 className="text-black font-light hover:underline">

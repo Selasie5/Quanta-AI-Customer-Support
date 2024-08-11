@@ -100,7 +100,7 @@ export default function Home() {
           />
         </div>
       </section>
-      <section className="px-12 py-5 flex justify-center items-center gap-28 mt-28">
+      <section id="features" className="px-12 py-5 flex justify-center items-center gap-28 mt-28">
         <div className="w-2/5 space-y-2">
           <h4 className="font-light text-lg text-white">Why Choose Quanta?</h4>
           <h5 className="font-medium text-5xl text-lime-200">Efficient support, anytime anywhere</h5>
@@ -166,7 +166,7 @@ export default function Home() {
           ))}
         </div>
       </section>
-      <section className=" px-5 md:px-12 py-5 flex flex-col md:flex-row justify-center items-center  gap-12 md:gap-36 mt-28">
+      <section id="technologies" className=" px-5 md:px-12 py-5 flex flex-col md:flex-row justify-center items-center  gap-12 md:gap-36 mt-28">
         <div className="md:w-1/2 space-y-2 flex flex-col justify-center items-start">
           <p className="text-lg text-white font-light">Technologies</p>
           <h2 className="font-medium text-5xl text-lime-200">

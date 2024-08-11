@@ -58,7 +58,7 @@ const languages = [
   { code: 'lv', name: 'Latvian' },
   { code: 'et', name: 'Estonian' },
   { code: 'mt', name: 'Maltese' },
-  // Add more languages as needed
+  // ... your languages array
 ];
 
 const ChatroomPage: React.FC = () => {
@@ -70,6 +70,7 @@ const ChatroomPage: React.FC = () => {
   const [selectedLanguage, setSelectedLanguage] = useState<string>('en'); // Default language
   const [showFeedback, setShowFeedback] = useState<boolean>(false);
   const [lastMessageId, setLastMessageId] = useState<string>("");
+  const [botResponseCount, setBotResponseCount] = useState<number>(0); // Track bot responses
 
   useEffect(() => {
     if (user?.uid) {
@@ -118,7 +119,18 @@ const ChatroomPage: React.FC = () => {
 
       setMessages((prevMessages) => [...prevMessages, botMessage]);
       setLastMessageId(botMessage.id.toString());
-      setShowFeedback(true);
+
+      setBotResponseCount(prevCount => {
+        const newCount = prevCount + 1;
+
+        // Show feedback after first 5 responses and then every 30 responses
+        if ((newCount === 5) || (newCount > 5 && (newCount - 5) % 30 === 0)) {
+          setShowFeedback(true);
+        }
+
+        return newCount;
+      });
+
     } catch (error) {
       console.error('Error sending message:', error);
     } finally {
@@ -172,9 +184,11 @@ const ChatroomPage: React.FC = () => {
                 height: "auto",
               }}
             >
-              {loading && <p className="text-white text-left">Loading...</p>}
               <p>{message.text}</p>
             </div>
+            {message.sender === "bot" && loading && (
+              <p className="text-white text-left">Loading...</p>
+            )}
             <Image
               src="/avatar-7.png"
               width={40}
@@ -220,4 +234,3 @@ const ChatroomPage: React.FC = () => {
 };
 
 export default ChatroomPage;
-

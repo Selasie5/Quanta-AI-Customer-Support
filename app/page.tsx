@@ -293,7 +293,7 @@ export default function Home() {
             We&apos;re here to help
           </h2>
           <p className=" text-white text-md font-light md:w-3/5 ">
-          Fill out the form below, and our support team will get back to you as soon as possible. Whether you have a question, need technical support, or just want to share your feedback, we're here to assist you every step of the way.
+          Fill out the form below, and our support team will get back to you as soon as possible. Whether you have a question, need technical support, or just want to share your feedback, we&apos;re here to assist you every step of the way.
           </p>
         </div>
         <div>

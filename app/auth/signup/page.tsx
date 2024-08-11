@@ -9,7 +9,7 @@ const page = () => {
       <section className="font-Grosteque px-12 py-5">
         <nav className=" flex justify-between items-center">
           <div className="logo">
-            <Link href="/landingpage">
+            <Link href="/">
               <span className="text-black font-extrabold text-5xl">Q.</span>
             </Link>
           </div>

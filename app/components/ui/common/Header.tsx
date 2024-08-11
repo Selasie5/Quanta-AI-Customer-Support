@@ -18,7 +18,7 @@ export default function Header() {
     <section className="px-12 py-5 data-scroll-section">
       <nav className="flex justify-between items-center">
         <div className="logo">
-          <Link href="/landingpage">
+          <Link href="/">
             <a>
               <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
             </a>

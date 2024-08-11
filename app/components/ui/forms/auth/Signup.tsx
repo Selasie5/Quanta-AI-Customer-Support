@@ -75,54 +75,50 @@ const Signup = () => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col justify-center items-start gap-7"
+      className="flex flex-col justify-center items-start gap-7 w-full"
     >
-      <div className="flex justify-center items-center gap-[5rem]">
-        <div className="flex flex-col justify-center items-start gap-2">
-          <label htmlFor="firstName" className="text-gray-600">
-            First Name
-          </label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.firstName}
-            className={`outline-none border pl-5 pr-[4rem] px-3 py-[0.7rem] text-gray-500 border-gray-400 rounded-md ${
-              formik.touched.firstName && formik.errors.firstName
-                ? "border-red-500"
-                : ""
-            }`}
-          />
-          {formik.touched.firstName && formik.errors.firstName && (
-            <div className="text-red-500 text-sm">
-              {formik.errors.firstName}
-            </div>
-          )}
-        </div>
-        <div className="flex flex-col justify-center items-start gap-2">
-          <label htmlFor="lastName" className="text-gray-600">
-            Last Name
-          </label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.lastName}
-            className={`outline-none border pl-5 pr-[4rem] px-3 py-[0.7rem] text-gray-500 border-gray-400 rounded-md ${
-              formik.touched.lastName && formik.errors.lastName
-                ? "border-red-500"
-                : ""
-            }`}
-          />
-          {formik.touched.lastName && formik.errors.lastName && (
-            <div className="text-red-500 text-sm">{formik.errors.lastName}</div>
-          )}
-        </div>
+        
+
+        <div className="flex flex-col justify-center items-start gap-2 w-full">
+        <label htmlFor="email" className="text-gray-600">
+          First Name
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.firstName}
+          className={`outline-none border w-full px-3 py-[0.7rem] text-gray-500 border-gray-400 rounded-md ${
+            formik.touched.firstName && formik.errors.firstName ? "border-red-500" : ""
+          }`}
+        />
+        {formik.touched.firstName && formik.errors.firstName && (
+          <div className="text-red-500 text-sm">{formik.errors.firstName}</div>
+        )}
       </div>
+ 
+        <div className="flex flex-col justify-center items-start gap-2 w-full">
+        <label htmlFor="email" className="text-gray-600">
+          Last Name
+        </label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          value={formik.values.lastName}
+          className={`outline-none border w-full px-3 py-[0.7rem] text-gray-500 border-gray-400 rounded-md ${
+            formik.touched.lastName && formik.errors.lastName ? "border-red-500" : ""
+          }`}
+        />
+        {formik.touched.lastName && formik.errors.lastName && (
+          <div className="text-red-500 text-sm">{formik.errors.lastName}</div>
+        )}
+      </div>
+ 
 
       <div className="flex flex-col justify-center items-start gap-2 w-full">
         <label htmlFor="email" className="text-gray-600">

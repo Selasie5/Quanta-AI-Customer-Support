@@ -21,6 +21,7 @@ export default function Header() {
           <span className="text-lime-200 font-extrabold text-4xl">
             <Link legacyBehavior href="/">Q.</Link>
           </span>
+
         </div>
         <div className="md:hidden z-50">
           <button
@@ -48,6 +49,7 @@ export default function Header() {
         </div>
         <div className="hidden md:flex justify-center items-center gap-10">
           <h6 className="text-white font-light hover:underline">
+
             <Link legacyBehavior href="#features">
               <a>Features</a>
             </Link>
@@ -65,10 +67,12 @@ export default function Header() {
           <h6 className="text-white font-light hover:underline">
             <Link legacyBehavior href="/supportroom">
               <a>Support</a>
+
             </Link>
           </h6>
           <div className="flex justify-center items-center gap-6">
             <button className="bg-white p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
+
               <Link legacyBehavior href="/auth/signup">
                 <a>Get Started</a>
               </Link>
@@ -76,6 +80,7 @@ export default function Header() {
             <button className="bg-lime-200 p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
               <Link legacyBehavior href="/auth/login">
                 <a>Login to account</a>
+
               </Link>
             </button>
           </div>

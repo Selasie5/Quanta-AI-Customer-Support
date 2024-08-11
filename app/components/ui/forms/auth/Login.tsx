@@ -62,7 +62,7 @@ const Login = () => {
    
     <form
       onSubmit={formik.handleSubmit}
-      className="flex flex-col justify-center items-start gap-7"
+      className=" flex flex-col justify-center items-start gap-7"
     >
       <div className="flex flex-col justify-center items-start gap-2 w-full">
         <label htmlFor="email" className="text-gray-600">

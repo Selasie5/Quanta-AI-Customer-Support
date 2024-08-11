@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FaCommentAlt } from "react-icons/fa";
 import { useAuth } from "../context/AuthProvider";
@@ -11,76 +11,62 @@ interface Message {
 }
 
 const ChatroomPage: React.FC = () => {
-  const {user} = useAuth();
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: 1,
-      sender: "bot",
-      text: "Hello, how can I assist you today?",
-    },
-    {
-      id: 2,
-      sender: "user",
-      text: "I'm interested in your AI-powered customer support solution. Can you tell me more about it?",
-    },
-    {
-      id: 3,
-      sender: "bot",
-      text: "Absolutely! Quanta is an AI-driven platform that delivers instant, accurate, and personalized responses to your customers, ensuring unparalleled satisfaction and efficiency.",
-    },
-  ]);
-
+  const { user } = useAuth();
+  const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [sessionId, setSessionId] = useState<string>("");
+
+  useEffect(() => {
+    // Initialize sessionId when user is authenticated
+    if (user?.uid) {
+      setSessionId(user.uid);
+    } else {
+      setSessionId("guest"); // Default value if user is not authenticated
+    }
+  }, [user]);
 
   const sendMessage = async () => {
-    if (!newMessage.trim()) return;
+    if (newMessage.trim() === "" || !sessionId) return;
 
-    const updatedMessages: Message[] = [
-      ...messages,
-      { id: messages.length + 1, sender: "user", text: newMessage },
-    ];
+    const userMessage: Message = {
+      id: messages.length + 1,
+      sender: "user",
+      text: newMessage,
+    };
 
-    setMessages(updatedMessages);
+    // Add the user's message to the state
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
     setNewMessage(""); // Clear the input field
+    setLoading(true); // Set loading state
 
     try {
-      const response = await fetch("/api/chat", {
-        method: "POST",
+      const response = await fetch('/api/chat', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ messages: updatedMessages }),
+        body: JSON.stringify({ sessionId, message: newMessage }),
       });
 
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-      let botReply = "";
-
-      if (reader) {
-        const processStream = async () => {
-          const { done, value } = await reader.read();
-          if (done) {
-            return;
-          }
-          
-          const chunk = decoder.decode(value, { stream: true });
-          botReply += chunk;
-
-          setMessages((prevMessages) => {
-            const lastMessage = prevMessages[prevMessages.length - 1];
-            return [
-              ...prevMessages.slice(0, prevMessages.length - 1),
-              { ...lastMessage, text: botReply },
-            ];
-          });
-
-          processStream(); // Continue processing the stream
-        };
-
-        processStream();
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      const data = await response.json();
+      const botMessage: Message = {
+        id: messages.length + 2,
+        sender: "bot",
+        text: data.response,
+      };
+
+      // Add the bot's response to the state
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
     } catch (error) {
-      console.error("Failed to send message", error);
+      console.error('Error sending message:', error);
+      // Optionally add an error message to the chat
+    } finally {
+      setLoading(false); // Reset loading state
     }
   };
 
@@ -115,7 +101,7 @@ const ChatroomPage: React.FC = () => {
               <p>{message.text}</p>
             </div>
             <Image
-              src={`/path/to/${message.sender}-avatar.png`} // Update with actual image path
+              src="/avatar-7.png" // Update with actual image path
               width={40}
               height={40}
               alt={`${message.sender} avatar`}
@@ -123,6 +109,7 @@ const ChatroomPage: React.FC = () => {
             />
           </div>
         ))}
+        {loading && <p className="text-white text-center">Loading...</p>}
       </div>
 
       <div className="bg-lime-200 border-t border-black px-8 py-4 flex items-center">
@@ -141,6 +128,7 @@ const ChatroomPage: React.FC = () => {
         <button
           className="bg-black text-white px-4 py-2 rounded-md ml-4 hover:bg-gray-800"
           onClick={sendMessage}
+          disabled={loading}
         >
           <FaCommentAlt />
         </button>

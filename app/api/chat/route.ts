@@ -36,51 +36,37 @@ export async function POST(req: NextRequest) {
   try {
     const { sessionId, message, language } = await req.json();
 
-    if (!sessionId || sessionId.trim() === "" || !message || !language) {
+    if (!sessionId || !message || !language) {
       console.error("Missing sessionId, message, or language.");
       return NextResponse.json({ error: "Missing sessionId, message, or language." }, { status: 400 });
     }
 
-    // Ensure the language is passed correctly
-    const config = {
-      configurable: {
-        sessionId,
-        language, // Ensure the language parameter is used in the model configuration
-      },
-    };
+    const translatedPrompt = ChatPromptTemplate.fromMessages([
+      ["system", `You are a helpful assistant who remembers all details the user shares with you. The user has selected the language: ${language}.`],
+      ["placeholder", "{chat_history}"],
+      ["human", "{input}"],
+    ]);
 
-    const responseStream = new ReadableStream({
-      async start(controller) {
-        try {
-          const response = await withMessageHistory.invoke(
-            { input: message },
-            config
-          );
+    const translatedChain = translatedPrompt.pipe(model);
 
-          let content: string;
-
-          if (typeof response.content === 'string') {
-            content = response.content;
-          } else if (Array.isArray(response.content)) {
-            content = response.content.join(''); // Join array elements into a string
-          } else {
-            content = JSON.stringify(response.content);
-          }
-
-          // Send JSON object as response
-          controller.enqueue(new TextEncoder().encode(JSON.stringify({ response: content })));
-          controller.close();
-        } catch (error) {
-          console.error("Error handling chat request:", error);
-          controller.error(error);
+    const withMessageHistoryTranslated = new RunnableWithMessageHistory({
+      runnable: translatedChain,
+      getMessageHistory: async (sessionId: string) => {
+        if (!messageHistories[sessionId]) {
+          messageHistories[sessionId] = new InMemoryChatMessageHistory();
         }
-      }
+        return messageHistories[sessionId];
+      },
+      inputMessagesKey: "input",
+      historyMessagesKey: "chat_history",
     });
 
-    return new NextResponse(responseStream, {
-      headers: { 'Content-Type': 'application/json' },
-    });
+    const response = await withMessageHistoryTranslated.invoke(
+      { input: message },
+      { configurable: { sessionId } }
+    );
 
+    return NextResponse.json({ response: response.content });
   } catch (error) {
     console.error("Error handling chat request:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

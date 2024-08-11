@@ -40,7 +40,7 @@ export default function Home() {
     {
       id: 1,
       name: "Selasie Sepenu",
-      image: "/avatar-7.png",
+      image: "/me.png",
       role: " AI Software Engineer",
       experience:
         "Collaborating on this project was a fantastic experience. We turned challenges into opportunities and learned so much along the way.",
@@ -50,7 +50,7 @@ export default function Home() {
     {
       id: 2,
       name: "Faisal Mawujar",
-      image: "/avatar-9.png",
+      image: "/team-mate.jpg",
       role: " AI Software Engineer",
       experience:
         "Being part of this project allowed me to push my limits and contribute to something truly innovative. It was a rewarding journey",

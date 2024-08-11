@@ -18,11 +18,9 @@ export default function Header() {
     <section className="px-12 py-5 data-scroll-section">
       <nav className="flex justify-between items-center">
         <div className="logo">
-          <Link href="/">
-            <a>
-              <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
-            </a>
-          </Link>
+          <span className="text-lime-200 font-extrabold text-4xl">
+            <Link legacyBehavior href="/">Q.</Link>
+          </span>
         </div>
         <div className="md:hidden z-50">
           <button
@@ -50,33 +48,33 @@ export default function Header() {
         </div>
         <div className="hidden md:flex justify-center items-center gap-10">
           <h6 className="text-white font-light hover:underline">
-            <Link href="#features">
+            <Link legacyBehavior href="#features">
               <a>Features</a>
             </Link>
           </h6>
           <h6 className="text-white font-light hover:underline">
-            <Link href="#team">
+            <Link legacyBehavior href="#team">
               <a>Meet Our Team</a>
             </Link>
           </h6>
           <h6 className="text-white font-light hover:underline">
-            <Link href="#technologies">
+            <Link legacyBehavior href="#technologies">
               <a>Technologies</a>
             </Link>
           </h6>
           <h6 className="text-white font-light hover:underline">
-            <Link href="/supportroom">
+            <Link legacyBehavior href="/supportroom">
               <a>Support</a>
             </Link>
           </h6>
           <div className="flex justify-center items-center gap-6">
             <button className="bg-white p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-              <Link href="/auth/signup">
+              <Link legacyBehavior href="/auth/signup">
                 <a>Get Started</a>
               </Link>
             </button>
             <button className="bg-lime-200 p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-              <Link href="/auth/login">
+              <Link legacyBehavior href="/auth/login">
                 <a>Login to account</a>
               </Link>
             </button>
@@ -107,32 +105,32 @@ export default function Header() {
             </svg>
           </button>
           <h6 className="text-white text-2xl font-light hover:underline">
-            <Link href="#features" onClick={() => setMenuOpen(false)}>
+            <Link legacyBehavior href="#features" onClick={() => setMenuOpen(false)}>
               <a>Features</a>
             </Link>
           </h6>
           <h6 className="text-white text-2xl font-light hover:underline">
-            <Link href="#team" onClick={() => setMenuOpen(false)}>
+            <Link legacyBehavior href="#team" onClick={() => setMenuOpen(false)}>
               <a>Meet Our Team</a>
             </Link>
           </h6>
           <h6 className="text-white text-2xl font-light hover:underline">
-            <Link href="#technologies" onClick={() => setMenuOpen(false)}>
+            <Link legacyBehavior href="#technologies" onClick={() => setMenuOpen(false)}>
               <a>Technologies</a>
             </Link>
           </h6>
           <h6 className="text-white text-2xl font-light hover:underline">
-            <Link href="/supportroom" onClick={() => setMenuOpen(false)}>
+            <Link legacyBehavior href="/supportroom" onClick={() => setMenuOpen(false)}>
               <a>Support</a>
             </Link>
           </h6>
           <button className="bg-white p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-            <Link href="/auth/signup" onClick={() => setMenuOpen(false)}>
+            <Link legacyBehavior href="/auth/signup" onClick={() => setMenuOpen(false)}>
               <a>Get Started</a>
             </Link>
           </button>
           <button className="bg-lime-200 p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
-            <Link href="/auth/login" onClick={() => setMenuOpen(false)}>
+            <Link legacyBehavior href="/auth/login" onClick={() => setMenuOpen(false)}>
               <a>Login to account</a>
             </Link>
           </button>

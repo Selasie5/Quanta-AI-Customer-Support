@@ -10,13 +10,13 @@ const page = () => {
       <section className="font-Grosteque px-12 py-5">
         <nav className=" flex justify-between items-center">
           <div className="logo">
-            <Link href="/">
-              <span className="text-black font-extrabold text-5xl">Q.</span>
-            </Link>
+            <span className="text-black font-extrabold text-5xl">
+              <Link legacyBehavior href="/">Q.</Link>
+            </span>
           </div>
           <div className="flex justify-center items-center gap-6">
             <h6 className="text-black font-light hover:underline">
-              <Link href="/">Support</Link>
+              <Link href="/supportroom">Support</Link>
             </h6>
             <button className="bg-lime-200 p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out">
               <Link href="/auth/signup">Create An Account</Link>

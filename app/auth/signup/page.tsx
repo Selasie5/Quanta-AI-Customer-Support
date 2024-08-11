@@ -9,9 +9,10 @@ const page = () => {
       <section className="font-Grosteque px-12 py-5">
         <nav className=" flex justify-between items-center">
           <div className="logo">
-            <Link href="/">
-              <span className="text-black font-extrabold text-5xl">Q.</span>
-            </Link>
+            
+              <span className="text-black font-extrabold text-5xl">
+                <Link href="/">Q.</Link>
+              </span>
           </div>
           <div className="flex justify-center items-center gap-6">
             <h6 className="text-black font-light hover:underline">

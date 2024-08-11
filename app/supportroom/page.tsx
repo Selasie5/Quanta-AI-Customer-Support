@@ -1,8 +1,12 @@
 "use client"
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
 import { FaCommentAlt } from "react-icons/fa";
 import { useAuth } from "../context/AuthProvider";
+import {auth} from "../../config/firebase"
+import { signOut } from "firebase/auth";
 import FeedbackForm from "../components/ui/forms/FeedbackForm";
 
 interface Message {
@@ -62,6 +66,7 @@ const languages = [
 ];
 
 const ChatroomPage: React.FC = () => {
+  const router = useRouter();
   const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState<string>("");
@@ -142,6 +147,11 @@ const ChatroomPage: React.FC = () => {
     setShowFeedback(false);
   };
 
+  const logOut = () => {
+    signOut(auth);
+    router.push("/auth/login");
+  };
+
   return (
     <div className="flex flex-col h-screen bg-black font-Grosteque text-white">
       <section className="px-12 py-5 data-scroll-section">
@@ -149,7 +159,9 @@ const ChatroomPage: React.FC = () => {
           <div className="logo">
             <span className="text-lime-200 font-extrabold text-4xl">Q.</span>
           </div>
-          <div className="language-select">
+          <div className="flex justify-center items-center gap-6">
+           
+            <div className="language-select">
             <select
               value={selectedLanguage}
               onChange={(e) => setSelectedLanguage(e.target.value)}
@@ -162,6 +174,11 @@ const ChatroomPage: React.FC = () => {
               ))}
             </select>
           </div>
+          <button className="bg-white text-black p-3 rounded-md font-medium text-sm hover:scale-105 transition ease-in-out" onClick={logOut}>
+              <Link href="">Logout</Link>
+            </button>
+          </div>
+          
         </nav>
       </section>
       <div className="flex-1 bg-black px-8 py-6 overflow-y-auto">

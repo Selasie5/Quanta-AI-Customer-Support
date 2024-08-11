@@ -27,7 +27,7 @@ const page = () => {
               Welcome back, customer support genius
             </h1>
             <p className="font-normal text-md text-black">
-              Let's get you back to assisting customers. Log in to continue.
+              Let&apos;s get you back to assisting customers. Log in to continue.
             </p>
           </div>
           <div className="w-1/2">

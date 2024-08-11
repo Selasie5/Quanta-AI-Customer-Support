@@ -153,6 +153,7 @@ const ChatroomPage: React.FC = () => {
         </nav>
       </section>
       <div className="flex-1 bg-black px-8 py-6 overflow-y-auto">
+      
         {messages.map((message) => (
           <div
             key={message.id}
@@ -171,6 +172,7 @@ const ChatroomPage: React.FC = () => {
                 height: "auto",
               }}
             >
+              {loading && <p className="text-white text-left">Loading...</p>}
               <p>{message.text}</p>
             </div>
             <Image
@@ -182,7 +184,6 @@ const ChatroomPage: React.FC = () => {
             />
           </div>
         ))}
-        {loading && <p className="text-white text-center">Loading...</p>}
       </div>
 
       <div className="bg-lime-200 border-t border-black px-8 py-4 flex items-center">

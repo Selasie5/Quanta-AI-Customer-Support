@@ -141,7 +141,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col md:flex-row justify-center items-center gap-[6rem] mt-4 ">
           {TeamMembers.map((member, id) => (
-            <div className="bg-lime-200 w-72 p-5 flex flex-col justify-center items-start gap-2 rounded-md hover:shadow-lg hover:scale-105 transition ease-in-out">
+            <div key={member.id} className="bg-lime-200 w-72 p-5 flex flex-col justify-center items-start gap-2 rounded-md hover:shadow-lg hover:scale-105 transition ease-in-out">
               <Image
                 src={member.image}
                 alt="team-member-img"
